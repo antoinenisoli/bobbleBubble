@@ -1,11 +1,14 @@
+using CustomPhysics2D;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
-public class GravityManager : MonoBehaviour
+public class CustomPhysics2d_Manager : MonoBehaviour
 {
-    public static GravityManager instance;
+    public static CustomPhysics2d_Manager instance;
     public Vector3 baseGravity = Vector3.up * -9.81f;
+    public List<CustomBoxCollider> colliders;
 
     private void Awake()
     {
@@ -13,5 +16,7 @@ public class GravityManager : MonoBehaviour
             instance = this;
         else
             Destroy(gameObject);
+
+        colliders = FindObjectsOfType<CustomBoxCollider>().ToList();
     }
 }
