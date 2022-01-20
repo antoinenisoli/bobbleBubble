@@ -197,7 +197,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 0.89
+  orthographic size: 0.97
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -237,6 +237,7 @@ GameObject:
   m_Component:
   - component: {fileID: 962034794}
   - component: {fileID: 962034795}
+  - component: {fileID: 962034796}
   m_Layer: 0
   m_Name: Sprite
   m_TagString: Untagged
@@ -309,6 +310,28 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &962034796
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 962034793}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 698f9b8cfd813f64f805e7f291b01276, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  startAnim: Idle
+  animRenderer: {fileID: 962034795}
+  animations:
+  - name: Idle
+    sprites:
+    - {fileID: -7067176810482676727, guid: 9479759ce05a3e44aa9bb4c43a8f46b1, type: 3}
+    - {fileID: -8245866535709944135, guid: 9479759ce05a3e44aa9bb4c43a8f46b1, type: 3}
+    frameRate: 0.5
+    loop: 1
+    mainSprite: {fileID: 0}
 --- !u!1 &1289755797
 GameObject:
   m_ObjectHideFlags: 0

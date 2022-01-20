@@ -8,7 +8,9 @@ public class PlayerController : MonoBehaviour
     public float jumpForce = 5f;
     public float speed = 10f;
     Rigidbody2D rb;
+    SpriteRenderer sprRenderer;
     Vector3 velocity;
+    bool flip;
 
     [Header("Ground detection")]
     public Transform feet;
@@ -23,6 +25,7 @@ public class PlayerController : MonoBehaviour
 
     private void Awake()
     {
+        sprRenderer = GetComponentInChildren<SpriteRenderer>();
         rb = GetComponent<Rigidbody2D>();
     }
 
@@ -35,12 +38,22 @@ public class PlayerController : MonoBehaviour
         rb.AddForce(Vector2.up * jumpForce);
     }
 
-    private void Update()
+    void Movements()
     {
         float xInput = Input.GetAxisRaw("Horizontal");
         velocity = rb.velocity;
         velocity.x = xInput * speed;
+        if (xInput < 0 && flip)
+            flip = false;
+        else if (xInput > 0 && !flip)
+            flip = true;
 
+        sprRenderer.flipX = flip;
+    }
+
+    private void Update()
+    {
+        Movements();
         if (Input.GetKeyDown(KeyCode.UpArrow) && onGround)
             Jump();
     }
