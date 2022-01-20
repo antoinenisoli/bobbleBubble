@@ -4,12 +4,12 @@ using UnityEngine;
 
 public class Platform : MonoBehaviour
 {
-    PlayerController player;
+    UnityPhysics_PlayerController player;
     BoxCollider2D box;
 
     private void Awake()
     {
-        player = FindObjectOfType<PlayerController>();
+        player = FindObjectOfType<UnityPhysics_PlayerController>();
         box = GetComponent<BoxCollider2D>();
     }
 
