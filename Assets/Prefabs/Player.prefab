@@ -182,8 +182,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b695f8dfe7d1ea4e8fa0c5b03cae36d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gravityScale: 0.1
+  gravityScale: 0.2
   velocity: {x: 0, y: 0}
+  entity: {fileID: 0}
 --- !u!114 &1556105091084007386
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -197,14 +198,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gizmoSize: 0.0158
-  gizmoColor: {r: 0.07678461, g: 1, b: 0, a: 0.44705883}
+  gizmoColor: {r: 0, g: 0.2876296, b: 1, a: 0.44705883}
+  spr: {fileID: 1556105089974699072}
   isColliding: 0
   applyMatrix: 0
   box:
-    position: {x: -0.242, y: -0.061}
+    position: {x: -0.161, y: -0.517}
     center: {x: 0, y: 0}
     width: 0.22
     height: 0.19
+    additionalSize: {x: 0, y: 0}
+    velocity: {x: 0, y: 0}
 --- !u!114 &1556105091084007364
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -217,11 +221,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f189964bd8236664ba439ff159e2282a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  jumpForce: 5
-  jumped: 0
-  speed: 300
-  drag: 5
-  friction: 50
-  velocity: {x: 0, y: 0}
-  clampPosition: {x: 1.8, y: 1}
   boxCollider: {fileID: 1556105091084007386}
+  localVelocity: {x: 0, y: 0}
+  inAir: 0
+  onWall: 0
+  jumpForce: 0.03
+  speed: 2
+  drag: 5

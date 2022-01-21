@@ -4,38 +4,38 @@ using UnityEngine;
 
 namespace CustomPhysics2D
 {
-    public class CustomPhysics_PlayerController : MonoBehaviour
+    public struct Collision
     {
-        [Header("Physics")]
-        [SerializeField] float jumpForce = 5f;
-        public bool inAir;
+        public PhysicBox box;
+        public Vector2 normal;
+
+        public Collision(PhysicBox box, Vector2 normal)
+        {
+            this.box = box;
+            this.normal = normal;
+        }
+    }
+
+    public class CustomPhysics_PlayerController : PhysicalEntity
+    {
+        [Header(nameof(CustomPhysics_PlayerController))]
+        [SerializeField] [Range(0, 0.1f)] float jumpForce = 5f;
         [SerializeField] float speed = 0.01f;
         [SerializeField] float drag = 0.1f;
-        [SerializeField] float friction = 0.1f;
-        [SerializeField] Vector2 velocity;
-        [SerializeField] Vector2 clampPosition;
-
-        [SerializeField] CustomBoxCollider boxCollider;
-        [SerializeField] PhysicBox raycastTest;
-        CustomBoxCollider obstacleCollider;
-        Vector2 normal;
-
         SpriteRenderer sprRenderer;
         bool flip;
         float xInput;
+        int xDirection = 1;
 
         private void OnDrawGizmos()
         {
             if (boxCollider.box != null)
-            {
                 boxCollider.Show();
-                if (raycastTest != null)
-                    boxCollider.Show(raycastTest);
-            }
         }
 
-        private void Awake()
+        public override void Awake()
         {
+            base.Awake();
             sprRenderer = GetComponentInChildren<SpriteRenderer>();
         }
 
@@ -43,85 +43,65 @@ namespace CustomPhysics2D
         {
             print("jump");
             EventManager.Instance.onPlayerJump.Invoke();
-            velocity.y = 0;
-            velocity += Vector2.up * jumpForce * Time.deltaTime;
-            inAir = true;
+            localVelocity.y = 0;
+            localVelocity += Vector2.up * jumpForce;
         }
 
         void ManageGraphics()
         {
-            if (xInput < 0 && flip)
-                flip = false;
-            else if (xInput > 0 && !flip)
-                flip = true;
+            if (xInput < 0 && xDirection != -1)
+                xDirection = -1;
+            else if (xInput > 0 && xDirection != 1)
+                xDirection = 1;
 
-            sprRenderer.flipX = flip;
+            Vector3 scale = transform.localScale;
+            scale.x = xDirection;
+            transform.localScale = scale;
+        }
+
+        void LerpVelocity()
+        {
+            localVelocity.x *= Time.deltaTime;
+            localVelocity.y = Mathf.Lerp(localVelocity.y, 0, drag * Time.deltaTime);
+            transform.position += (Vector3)localVelocity;
+            body.velocity = localVelocity;
         }
 
         void Movements()
         {
-            velocity += Vector2.right * xInput * speed * Time.deltaTime;
-            velocity.x = Mathf.Lerp(velocity.x * Time.deltaTime, 0, friction * Time.deltaTime);
-            velocity.y = Mathf.Lerp(velocity.y, 0, drag * Time.deltaTime);
-
-            transform.position += (Vector3)velocity;
-            Vector2 clampedPosition = transform.position;
-            clampedPosition.x = Mathf.Clamp(clampedPosition.x, -clampPosition.x, clampPosition.x);
-            clampedPosition.y = Mathf.Clamp(clampedPosition.y, -clampPosition.y, clampPosition.y);
-            transform.position = clampedPosition;
-        }
-
-        void Landing()
-        {
-            inAir = false;
-            velocity.y = 0;
-            EventManager.Instance.onPlayerLanding.Invoke();
-        }
-
-        void ManageCollisions()
-        {
-            if (boxCollider)
+            localVelocity += Vector2.right * xInput * speed;
+            foreach (var item in contactCollisions.Values)
             {
-                boxCollider.box.velocity = velocity;
-                foreach (var collider in CustomPhysics2d_Manager.instance.colliders)
-                {
-                    if (collider == boxCollider)
-                        return;
+                if (normal.sqrMagnitude == 0)
+                    continue;
 
-                    //print(CustomPhysics.CheckAABB(raycastTest, collider.box));
-                    bool collision = CustomPhysics.CheckAABB(boxCollider.box, collider.box, out normal);
-                    if (collision && collider.enabled)
-                    {
-                        if (normal.sqrMagnitude > 0)
-                            print(normal);
-
-                        if (!boxCollider.isColliding && inAir)
-                            Landing();
-
-                        boxCollider.isColliding = true;
-                        collider.isColliding = true;
-                        obstacleCollider = collider;
-                        return;
-                    }
-                    else
-                    {
-                        obstacleCollider = null;
-                        boxCollider.isColliding = false;
-                        collider.isColliding = false;
-                    }
-                }
+                bool onWallRight = item.normal.x < 0 && xDirection > 0;
+                bool onWallLeft = item.normal.x > 0 && xDirection < 0;
+                onWall = onWallLeft || onWallRight;
+                if (onWall)
+                    localVelocity.x = 0;
             }
         }
 
-        void Update()
+        public override void Landing()
+        {
+            base.Landing();
+            EventManager.Instance.onPlayerLanding.Invoke();
+        }
+
+        public override void Update()
         {
             xInput = Input.GetAxisRaw("Horizontal");
-            ManageCollisions();
             ManageGraphics();
             if (Input.GetKeyDown(KeyCode.UpArrow) && !inAir)
                 Jump();
 
             Movements();
+            LerpVelocity();
+            base.Update();
+
+            print(CheckGround());
+            inAir = !CheckGround();
         }
     }
 }

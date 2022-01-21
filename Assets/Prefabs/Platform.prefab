@@ -27,8 +27,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6167779168871060281}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.778, y: -0.665, z: 0}
-  m_LocalScale: {x: 0.3849408, y: 0.25105175, z: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 0.50766414, y: 0.11324547, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -47,13 +47,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gizmoSize: 0.0158
   gizmoColor: {r: 0.07678461, g: 1, b: 0, a: 0.44705883}
+  spr: {fileID: 6167779168871060283}
   isColliding: 0
   applyMatrix: 0
   box:
-    position: {x: -0.778, y: -0.665}
+    position: {x: 0, y: 0}
     center: {x: 0, y: 0}
-    width: 0.4
-    height: 0.27
+    width: 0.51
+    height: 0.12
+    additionalSize: {x: 1, y: 1}
+    velocity: {x: 0, y: 0}
 --- !u!114 &6167779168871060276
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -67,6 +70,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   boxCollider: {fileID: 6167779168871060277}
+  collidable: 1
 --- !u!212 &6167779168871060283
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -107,11 +111,11 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 7482667652216324306, guid: 48e93eef0688c4a259cb0eddcd8661f7, type: 3}
+  m_Sprite: {fileID: 21300000, guid: ca212481422ba9048b98494bebdfb60d, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
-  m_DrawMode: 0
+  m_DrawMode: 2
   m_Size: {x: 1, y: 1}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0

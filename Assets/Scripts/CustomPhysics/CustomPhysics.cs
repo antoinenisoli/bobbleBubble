@@ -6,26 +6,31 @@ namespace CustomPhysics2D
 {
     public static class CustomPhysics
     {
-        public static bool CheckAABB(PhysicBox b1, PhysicBox b2, out Vector2 normal)
+        public static bool CheckAABB(PhysicBox b1, PhysicBox b2)
         {
-            normal = new Vector2();
-
-            if (b1.velocity.x > 0)
-                normal.x = 1;
-            else if (b1.velocity.x < 0)
-                normal.x = -1;
-
-            if (b1.velocity.y > 0)
-                normal.y = 1;
-            else if (b1.velocity.y < 0)
-                normal.y = -1;
-
             bool check =
                 b1.minX <= b2.maxX && b1.maxX >= b2.minX
                 && b1.minY <= b2.maxY && b1.maxY >= b2.minY
                 ;
 
             return check;
+        }
+
+        public static Vector2 GetNormal(PhysicBox b1, PhysicBox b2)
+        {
+            Vector2 normal = new Vector2();
+
+            if (b1.minX <= b2.minX && b2.minX <= b1.maxX && b1.maxX < b2.maxX)
+                normal.x = -1;
+            if (b2.minX <= b1.minX && b1.minX <= b2.maxX && b2.maxX < b1.maxX)
+                normal.x = 1;
+
+            if (b1.minY <= b2.minY && b2.minY <= b1.maxY && b1.maxY <= b2.maxY)
+                normal.y = -1;
+            if (b2.minY <= b1.minY && b1.maxY >= b2.maxY && b2.maxY <= b1.maxY)
+                normal.y = 1;
+
+            return normal;
         }
     }
 }

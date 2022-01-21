@@ -8,6 +8,7 @@ namespace CustomPhysics2D
     {
         [SerializeField] [Range(0,0.1f)] float gizmoSize = 0.1f;
         [SerializeField] Color gizmoColor = Color.white;
+        [SerializeField] SpriteRenderer spr;
         public bool isColliding;
         [SerializeField] bool applyMatrix = true;
         public PhysicBox box;
@@ -56,6 +57,14 @@ namespace CustomPhysics2D
         void ApplyTransform()
         {
             box.position = transform.position + (Vector3)box.center;
+            if (spr)
+            {
+                if (spr.drawMode != SpriteDrawMode.Tiled)
+                {
+                    box.width = Mathf.Abs((transform.lossyScale.x * 0.25f) * box.additionalSize.x);
+                    box.height = Mathf.Abs((transform.lossyScale.y * 0.25f) * box.additionalSize.y);
+                }
+            }
         }
 
         void DisplayBox(PhysicBox box, Vector2 positionOffset = default)

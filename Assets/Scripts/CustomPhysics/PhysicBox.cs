@@ -10,6 +10,7 @@ namespace CustomPhysics2D
         public Vector2 position;
         public Vector2 center = new Vector2();
         public float width, height;
+        public Vector2 additionalSize;
         public Vector2 velocity;
 
         public Vector2 topRightCorner => position + new Vector2(width / 2, height / 2);

@@ -33,18 +33,18 @@ namespace CustomPhysics2D
 
         void ColliderEnable()
         {
-            collidable = true;
+            //collidable = true;
         }
 
         void ColliderDisable()
         {
-            if (player.transform.position.y < transform.position.y)
-                collidable = false;
+            /*if (player.transform.position.y < transform.position.y)
+                collidable = false;*/
         }
 
         private void Update()
         {
-            //boxCollider.enabled = collidable;
+            boxCollider.enabled = collidable;
         }
     }
 }
