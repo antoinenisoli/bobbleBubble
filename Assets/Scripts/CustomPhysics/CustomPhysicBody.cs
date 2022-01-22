@@ -34,14 +34,14 @@ namespace CustomPhysics2D
                 if (entity)
                 {
                     if (entity.inAir)
-                        velocity += gravityScale * Time.deltaTime * CustomPhysics2d_Manager.instance.baseGravity;
+                        velocity += gravityScale * Time.deltaTime * Physics2d_Manager.instance.baseGravity;
                     else
                         Drag();
                 }
                 else
                 {
                     if (!customCollider.isColliding)
-                        velocity += gravityScale * Time.deltaTime * CustomPhysics2d_Manager.instance.baseGravity;
+                        velocity += gravityScale * Time.deltaTime * Physics2d_Manager.instance.baseGravity;
                     else
                         Drag();
                 }

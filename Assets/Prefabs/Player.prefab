@@ -129,7 +129,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1556105090302600382}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.0679, z: 0}
+  m_LocalPosition: {x: 0, y: -0.439, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1556105091084007366}
@@ -182,9 +182,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b695f8dfe7d1ea4e8fa0c5b03cae36d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gravityScale: 0.01
+  gravityScale: 0.07
   velocity: {x: 0, y: 0}
-  maxVelocity: {x: 0, y: -0.05}
+  maxVelocity: {x: 0, y: -1}
   drag: 0.1
   gravity: 1
   entity: {fileID: 1556105091084007364}
@@ -200,17 +200,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5b220e22010fef4b87aceb120a56688, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gizmoSize: 0.0158
+  gizmoSize: 0.088
   gizmoColor: {r: 0, g: 0.2876296, b: 1, a: 0.44705883}
-  spr: {fileID: 1556105089974699072}
+  spr: {fileID: 0}
   isColliding: 0
   applyMatrix: 0
   box:
-    position: {x: -1.45, y: 21.81}
+    position: {x: -0.5, y: 7}
     center: {x: 0, y: 0}
-    width: 0.125
-    height: 0.175
-    additionalSize: {x: 0.5, y: 0.7}
+    width: 1
+    height: 1
+    additionalSize: {x: 1, y: 1}
 --- !u!114 &1556105091084007364
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -227,6 +227,6 @@ MonoBehaviour:
   inAir: 0
   onWall: 0
   contacts: []
-  jumpForce: 0.0375
-  speed: 0.5
+  jumpForce: 0.25
+  speed: 3
   friction: 100

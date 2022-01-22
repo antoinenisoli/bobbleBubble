@@ -33,25 +33,12 @@ namespace CustomPhysics2D
 
         public bool CheckGround()
         {
-            foreach (var collider in CustomPhysics2d_Manager.instance.colliders)
-            {
-                if (collider == boxCollider)
-                    continue;
-
-                bool collision = CustomPhysics.CheckAABB(boxCollider.box, collider.box, out Vector2 normal);
-                if (collision)
-                {
-                    if (normal.y > 0)
-                        return true;
-                }
-            }      
-
-            /*foreach (var collision in contactCollisions.Values)
+            foreach (var collision in contactCollisions.Values)
             {
                 print(collision.normal);
                 if (collision.normal.y > 0)
                     return true;
-            }*/
+            }
 
             return false;
         }
@@ -79,7 +66,7 @@ namespace CustomPhysics2D
         {
             if (boxCollider)
             {
-                foreach (var collider in CustomPhysics2d_Manager.instance.colliders)
+                foreach (var collider in Physics2d_Manager.instance.colliders)
                 {
                     if (collider == boxCollider)
                         continue;
@@ -98,9 +85,9 @@ namespace CustomPhysics2D
 
         public virtual void Update()
         {
-            inAir = !CheckGround();
             boxCollider.isColliding = IsColliding();
             ManageCollisions();
+            inAir = !CheckGround();
             contacts = contactCollisions.Values.ToList();
         }
     }
