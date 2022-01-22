@@ -4,14 +4,15 @@ using UnityEngine;
 
 namespace CustomPhysics2D
 {
+    [System.Serializable]
     public struct Collision
     {
-        public PhysicBox box;
+        public CustomBoxCollider collider;
         public Vector2 normal;
 
-        public Collision(PhysicBox box, Vector2 normal)
+        public Collision(CustomBoxCollider collider, Vector2 normal)
         {
-            this.box = box;
+            this.collider = collider;
             this.normal = normal;
         }
     }
@@ -19,11 +20,10 @@ namespace CustomPhysics2D
     public class CustomPhysics_PlayerController : PhysicalEntity
     {
         [Header(nameof(CustomPhysics_PlayerController))]
-        [SerializeField] [Range(0, 0.1f)] float jumpForce = 5f;
+        [SerializeField] float jumpForce = 5f;
         [SerializeField] float speed = 0.01f;
-        [SerializeField] float drag = 0.1f;
+        [SerializeField] float friction = 0.01f;
         SpriteRenderer sprRenderer;
-        bool flip;
         float xInput;
         int xDirection = 1;
 
@@ -41,10 +41,11 @@ namespace CustomPhysics2D
 
         void Jump()
         {
+            inAir = true;
             print("jump");
             EventManager.Instance.onPlayerJump.Invoke();
-            localVelocity.y = 0;
-            localVelocity += Vector2.up * jumpForce;
+            body.velocity.y = 0;
+            body.velocity += Vector2.up * jumpForce;
         }
 
         void ManageGraphics()
@@ -59,27 +60,27 @@ namespace CustomPhysics2D
             transform.localScale = scale;
         }
 
-        void LerpVelocity()
-        {
-            localVelocity.x *= Time.deltaTime;
-            localVelocity.y = Mathf.Lerp(localVelocity.y, 0, drag * Time.deltaTime);
-            transform.position += (Vector3)localVelocity;
-            body.velocity = localVelocity;
-        }
-
         void Movements()
         {
-            localVelocity += Vector2.right * xInput * speed;
+            if (xInput == 0)
+                body.velocity.x = Mathf.Lerp(body.velocity.x, 0, friction * Time.deltaTime);
+            else
+            {
+                float velocity = speed * xInput;
+                velocity *= Time.fixedDeltaTime;
+                body.velocity.x = velocity;
+            }
+
             foreach (var item in contactCollisions.Values)
             {
-                if (normal.sqrMagnitude == 0)
+                if (item.normal.sqrMagnitude == 0)
                     continue;
 
                 bool onWallRight = item.normal.x < 0 && xDirection > 0;
                 bool onWallLeft = item.normal.x > 0 && xDirection < 0;
                 onWall = onWallLeft || onWallRight;
                 if (onWall)
-                    localVelocity.x = 0;
+                    body.velocity.x = 0;
             }
         }
 
@@ -93,15 +94,17 @@ namespace CustomPhysics2D
         {
             xInput = Input.GetAxisRaw("Horizontal");
             ManageGraphics();
-            if (Input.GetKeyDown(KeyCode.UpArrow) && !inAir)
-                Jump();
-
             Movements();
-            LerpVelocity();
             base.Update();
 
-            print(CheckGround());
-            inAir = !CheckGround();
+            if (!inAir)
+            {
+                body.velocity.y = 0;
+                if (Input.GetButtonDown("Jump"))
+                {
+                    Jump();
+                }
+            }
         }
     }
 }

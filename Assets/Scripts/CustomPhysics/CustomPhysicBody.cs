@@ -8,6 +8,9 @@ namespace CustomPhysics2D
     {
         [SerializeField] float gravityScale = 1f;
         public Vector2 velocity;
+        [SerializeField] Vector2 maxVelocity;
+        [SerializeField] float drag = 0.1f;
+        public bool gravity = true;
         CustomBoxCollider customCollider;
         [SerializeField] PhysicalEntity entity;
 
@@ -16,26 +19,41 @@ namespace CustomPhysics2D
             customCollider = GetComponent<CustomBoxCollider>();
         }
 
-        private void Update()
+        void Drag()
         {
+            velocity.y = Mathf.Lerp(velocity.y, 0, drag * Time.deltaTime);
+        }
+
+        void ApplyGravity()
+        {
+            if (!gravity)
+                return;
+
             if (customCollider)
             {
                 if (entity)
                 {
-                    if (entity.inAir || (customCollider.isColliding && entity.onWall))
-                        velocity = CustomPhysics2d_Manager.instance.baseGravity * gravityScale * Time.deltaTime;
+                    if (entity.inAir)
+                        velocity += gravityScale * Time.deltaTime * CustomPhysics2d_Manager.instance.baseGravity;
                     else
-                        velocity = Vector2.zero;
+                        Drag();
                 }
                 else
                 {
                     if (!customCollider.isColliding)
-                        velocity = CustomPhysics2d_Manager.instance.baseGravity * gravityScale * Time.deltaTime;
+                        velocity += gravityScale * Time.deltaTime * CustomPhysics2d_Manager.instance.baseGravity;
                     else
-                        velocity = Vector2.zero;
+                        Drag();
                 }
-            }
 
+                if (velocity.y < maxVelocity.y)
+                    velocity.y = maxVelocity.y;
+            }
+        }
+
+        private void Update()
+        {
+            ApplyGravity();
             transform.position += (Vector3)velocity;
         }
     }

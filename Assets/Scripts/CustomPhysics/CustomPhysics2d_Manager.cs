@@ -7,7 +7,7 @@ using UnityEngine;
 public class CustomPhysics2d_Manager : MonoBehaviour
 {
     public static CustomPhysics2d_Manager instance;
-    public Vector3 baseGravity = Vector3.up * -9.81f;
+    public Vector2 baseGravity = Vector2.up * -9.81f;
     public List<CustomBoxCollider> colliders;
 
     private void Awake()

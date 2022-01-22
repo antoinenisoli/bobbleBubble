@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace CustomPhysics2D
@@ -8,11 +9,10 @@ namespace CustomPhysics2D
     {
         [Header(nameof(PhysicalEntity))]
         [SerializeField] protected CustomBoxCollider boxCollider;
-        [SerializeField] protected Vector2 localVelocity;
         public bool inAir;
         public bool onWall;
+        [SerializeField] List<Collision> contacts = new List<Collision>();
         protected Dictionary<PhysicBox, Collision> contactCollisions = new Dictionary<PhysicBox, Collision>();
-        protected Vector2 normal;
         protected CustomPhysicBody body;
 
         public virtual void Awake()
@@ -22,9 +22,8 @@ namespace CustomPhysics2D
 
         public virtual void Landing()
         {
-            print(normal);
-            inAir = false;
-            localVelocity.y = 0;
+            if (inAir)
+                body.velocity.y = 0;
         }
 
         public bool IsColliding()
@@ -39,59 +38,70 @@ namespace CustomPhysics2D
                 if (collider == boxCollider)
                     continue;
 
-                bool collision = CustomPhysics.CheckAABB(boxCollider.box, collider.box);
+                bool collision = CustomPhysics.CheckAABB(boxCollider.box, collider.box, out Vector2 normal);
                 if (collision)
                 {
-                    normal = CustomPhysics.GetNormal(boxCollider.box, collider.box);
-                    if (normal.y != 0)
+                    if (normal.y > 0)
                         return true;
                 }
-            }
+            }      
+
+            /*foreach (var collision in contactCollisions.Values)
+            {
+                print(collision.normal);
+                if (collision.normal.y > 0)
+                    return true;
+            }*/
 
             return false;
+        }
+
+        public void CollisionWithBox(Collision col)
+        {
+            if (!contactCollisions.ContainsKey(col.collider.box))
+            {
+                Landing();
+                contactCollisions.Add(col.collider.box, col);
+                col.collider.isColliding = true;
+            }
+        }
+
+        public void ExitCollision(CustomBoxCollider collider)
+        {
+            if (contactCollisions.ContainsKey(collider.box))
+            {
+                contactCollisions.Remove(collider.box);
+                collider.isColliding = false;
+            }
         }
 
         public void ManageCollisions()
         {
             if (boxCollider)
             {
-                boxCollider.box.velocity = localVelocity;
                 foreach (var collider in CustomPhysics2d_Manager.instance.colliders)
                 {
                     if (collider == boxCollider)
                         continue;
 
-                    bool collision = CustomPhysics.CheckAABB(boxCollider.box, collider.box);
+                    bool collision = CustomPhysics.CheckAABB(boxCollider.box, collider.box, out Vector2 normal);
                     if (collision)
                     {
-                        normal = CustomPhysics.GetNormal(boxCollider.box, collider.box);
-                        if (!boxCollider.isColliding && inAir)
-                            Landing();
-
-                        Collision col = new Collision(collider.box, normal);
-                        if (!contactCollisions.ContainsKey(collider.box))
-                        {
-                            contactCollisions.Add(col.box, col);
-                            collider.isColliding = true;
-                        }
+                        Collision col = new Collision(collider, normal);
+                        CollisionWithBox(col);
                     }
                     else
-                    {
-                        if (contactCollisions.ContainsKey(collider.box))
-                        {
-                            normal = new Vector2();
-                            contactCollisions.Remove(collider.box);
-                            collider.isColliding = false;
-                        }
-                    }
+                        ExitCollision(collider);
                 }
             }
         }
 
         public virtual void Update()
         {
+            inAir = !CheckGround();
             boxCollider.isColliding = IsColliding();
             ManageCollisions();
+            contacts = contactCollisions.Values.ToList();
         }
     }
 }

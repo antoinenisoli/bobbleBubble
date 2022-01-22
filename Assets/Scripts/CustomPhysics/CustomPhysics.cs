@@ -16,6 +16,12 @@ namespace CustomPhysics2D
             return check;
         }
 
+        public static bool CheckAABB(PhysicBox b1, PhysicBox b2, out Vector2 normal)
+        {
+            normal = GetNormal(b1, b2);
+            return CheckAABB(b1, b2);
+        }
+
         public static Vector2 GetNormal(PhysicBox b1, PhysicBox b2)
         {
             Vector2 normal = new Vector2();
@@ -29,6 +35,9 @@ namespace CustomPhysics2D
                 normal.y = -1;
             if (b2.minY <= b1.minY && b1.maxY >= b2.maxY && b2.maxY <= b1.maxY)
                 normal.y = 1;
+
+            if (normal.x != 0 && normal.y != 0)
+                normal.y = 0;
 
             return normal;
         }
