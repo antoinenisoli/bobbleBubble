@@ -13,17 +13,11 @@ namespace CustomPhysics2D
         public bool onWall;
         [SerializeField] List<Collision> contacts = new List<Collision>();
         protected Dictionary<PhysicBox, Collision> contactCollisions = new Dictionary<PhysicBox, Collision>();
-        protected CustomPhysicBody body;
+        protected PhysicBody body;
 
         public virtual void Awake()
         {
-            body = GetComponent<CustomPhysicBody>();
-        }
-
-        public virtual void Landing()
-        {
-            if (inAir)
-                body.velocity.y = 0;
+            body = GetComponent<PhysicBody>();
         }
 
         public bool IsColliding()
@@ -35,7 +29,6 @@ namespace CustomPhysics2D
         {
             foreach (var collision in contactCollisions.Values)
             {
-                print(collision.normal);
                 if (collision.normal.y > 0)
                     return true;
             }
@@ -43,23 +36,23 @@ namespace CustomPhysics2D
             return false;
         }
 
-        public void CollisionWithBox(Collision col)
+        public virtual void CollisionWithBox(Collision col)
         {
-            if (!contactCollisions.ContainsKey(col.collider.box))
-            {
-                Landing();
-                contactCollisions.Add(col.collider.box, col);
-                col.collider.isColliding = true;
-            }
+            body.velocity = new Vector2(body.velocity.x, 0);
+            print(col.collider.GetInstanceID());
+            contactCollisions.Add(col.collider.box, col);
+            col.collider.isColliding = true;
+
+            if (col.normal.y > 0)
+                transform.position = new Vector2(transform.position.x, col.collider.box.maxY + boxCollider.box.height/2);
+            else if (col.normal.y < 0)
+                transform.position = new Vector2(transform.position.x, col.collider.box.minY - boxCollider.box.height / 2);
         }
 
-        public void ExitCollision(CustomBoxCollider collider)
+        public virtual void ExitCollision(CustomBoxCollider collider)
         {
-            if (contactCollisions.ContainsKey(collider.box))
-            {
-                contactCollisions.Remove(collider.box);
-                collider.isColliding = false;
-            }
+            contactCollisions.Remove(collider.box);
+            collider.isColliding = false;
         }
 
         public void ManageCollisions()
@@ -75,9 +68,10 @@ namespace CustomPhysics2D
                     if (collision)
                     {
                         Collision col = new Collision(collider, normal);
-                        CollisionWithBox(col);
+                        if (!contactCollisions.ContainsKey(collider.box))
+                            CollisionWithBox(col);
                     }
-                    else
+                    else if (contactCollisions.ContainsKey(collider.box))
                         ExitCollision(collider);
                 }
             }
@@ -86,9 +80,13 @@ namespace CustomPhysics2D
         public virtual void Update()
         {
             boxCollider.isColliding = IsColliding();
+            contacts = contactCollisions.Values.ToList();
+        }
+
+        public virtual void FixedUpdate()
+        {
             ManageCollisions();
             inAir = !CheckGround();
-            contacts = contactCollisions.Values.ToList();
         }
     }
 }

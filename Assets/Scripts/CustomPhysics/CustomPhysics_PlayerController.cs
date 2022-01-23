@@ -44,8 +44,14 @@ namespace CustomPhysics2D
             inAir = true;
             print("jump");
             EventManager.Instance.onPlayerJump.Invoke();
-            body.velocity.y = 0;
-            body.velocity += Vector2.up * jumpForce;
+            body.velocity = new Vector2(body.velocity.x, 0);
+            body.AddForce(Vector2.up * jumpForce);
+        }
+
+        public override void CollisionWithBox(Collision col)
+        {
+            base.CollisionWithBox(col);
+            EventManager.Instance.onPlayerLanding.Invoke();
         }
 
         void ManageGraphics()
@@ -63,12 +69,12 @@ namespace CustomPhysics2D
         void Movements()
         {
             if (xInput == 0)
-                body.velocity.x = Mathf.Lerp(body.velocity.x, 0, friction * Time.deltaTime);
+                body.velocity = new Vector2(Mathf.Lerp(body.velocity.x, 0, friction * Time.deltaTime), body.velocity.y);
             else
             {
                 float velocity = speed * xInput;
                 velocity *= Time.fixedDeltaTime;
-                body.velocity.x = velocity;
+                body.velocity = new Vector2(velocity, body.velocity.y);
             }
 
             foreach (var item in contactCollisions.Values)
@@ -80,31 +86,28 @@ namespace CustomPhysics2D
                 bool onWallLeft = item.normal.x > 0 && xDirection < 0;
                 onWall = onWallLeft || onWallRight;
                 if (onWall)
-                    body.velocity.x = 0;
+                    body.velocity = new Vector2(0, body.velocity.y);
             }
-        }
-
-        public override void Landing()
-        {
-            base.Landing();
-            EventManager.Instance.onPlayerLanding.Invoke();
         }
 
         public override void Update()
         {
             xInput = Input.GetAxisRaw("Horizontal");
             ManageGraphics();
-            Movements();
             base.Update();
 
             if (!inAir)
             {
-                body.velocity.y = 0;
+                body.velocity = new Vector2(body.velocity.x, 0);
                 if (Input.GetButtonDown("Jump"))
-                {
                     Jump();
-                }
             }
+        }
+
+        public override void FixedUpdate()
+        {
+            base.FixedUpdate();
+            Movements();
         }
     }
 }
