@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 4887945824405005228}
   - component: {fileID: 5291008845621336834}
   - component: {fileID: 702113735032911072}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Enemy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -72,7 +72,7 @@ MonoBehaviour:
   isColliding: 0
   applyMatrix: 0
   box:
-    position: {x: 5.36, y: 6.05}
+    position: {x: 0, y: 0}
     center: {x: 0, y: 0}
     width: 1
     height: 1
@@ -93,8 +93,9 @@ MonoBehaviour:
   body: {fileID: 4887945824405005228}
   interactWith:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 4294967295
   wayPoints: []
+  speed: 0.01
 --- !u!1 &5291008846797084856
 GameObject:
   m_ObjectHideFlags: 0
@@ -106,7 +107,7 @@ GameObject:
   - component: {fileID: 5291008846797084857}
   - component: {fileID: 5291008846797084859}
   - component: {fileID: 5291008846797084858}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Sprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -200,5 +201,8 @@ MonoBehaviour:
     - {fileID: -2672249963218670421, guid: 14d9f4dd55d01ec42bfa202def158791, type: 3}
     - {fileID: -7994318442711983760, guid: 14d9f4dd55d01ec42bfa202def158791, type: 3}
     frameRate: 0.15
+    timer: 0
+    spriteIndex: 0
     loop: 1
+    done: 0
     mainSprite: {fileID: 7241644841585196438, guid: 14d9f4dd55d01ec42bfa202def158791, type: 3}

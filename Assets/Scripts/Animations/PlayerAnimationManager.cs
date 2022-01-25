@@ -7,10 +7,15 @@ public class PlayerAnimationManager : MonoBehaviour
     AnimationScript anim;
     PlayerController player;
 
-    private void Awake()
+    private void Start()
     {
         anim = GetComponent<AnimationScript>();
         player = GetComponentInParent<PlayerController>();
+    }
+
+    public void Shoot()
+    {
+        anim.PlayAnimOnce("Shoot");
     }
 
     void Update()
@@ -21,8 +26,5 @@ public class PlayerAnimationManager : MonoBehaviour
             anim.SetCurrentAnim("Air");
         else
             anim.SetCurrentAnim("Idle");
-
-        if (Input.GetKeyDown(KeyCode.O))
-            anim.PlayAnimOnce("Shoot");
     }
 }

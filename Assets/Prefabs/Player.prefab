@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 1556105089974699072}
   - component: {fileID: 113023131796579811}
   - component: {fileID: 1556105089974699079}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Sprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -116,6 +116,8 @@ MonoBehaviour:
     - {fileID: -7067176810482676727, guid: 9479759ce05a3e44aa9bb4c43a8f46b1, type: 3}
     - {fileID: -8245866535709944135, guid: 9479759ce05a3e44aa9bb4c43a8f46b1, type: 3}
     frameRate: 0.3
+    timer: 0
+    spriteIndex: 0
     loop: 1
     done: 0
     mainSprite: {fileID: -7067176810482676727, guid: 9479759ce05a3e44aa9bb4c43a8f46b1, type: 3}
@@ -124,6 +126,8 @@ MonoBehaviour:
     - {fileID: 3612436730172642894, guid: 9479759ce05a3e44aa9bb4c43a8f46b1, type: 3}
     - {fileID: 7501396002627147396, guid: 9479759ce05a3e44aa9bb4c43a8f46b1, type: 3}
     frameRate: 0.3
+    timer: 0
+    spriteIndex: 0
     loop: 1
     done: 0
     mainSprite: {fileID: 3612436730172642894, guid: 9479759ce05a3e44aa9bb4c43a8f46b1, type: 3}
@@ -132,23 +136,20 @@ MonoBehaviour:
     - {fileID: -4807753606334595397, guid: 9479759ce05a3e44aa9bb4c43a8f46b1, type: 3}
     - {fileID: 4855259807885441979, guid: 9479759ce05a3e44aa9bb4c43a8f46b1, type: 3}
     frameRate: 0.3
+    timer: 0
+    spriteIndex: 0
     loop: 1
     done: 0
     mainSprite: {fileID: -4807753606334595397, guid: 9479759ce05a3e44aa9bb4c43a8f46b1, type: 3}
   - name: Shoot
     sprites:
-    - {fileID: -354626060968229937, guid: 9479759ce05a3e44aa9bb4c43a8f46b1, type: 3}
-    - {fileID: 904064935985447064, guid: 9479759ce05a3e44aa9bb4c43a8f46b1, type: 3}
-    - {fileID: 5169088989095445609, guid: 9479759ce05a3e44aa9bb4c43a8f46b1, type: 3}
-    - {fileID: 4160169947384030945, guid: 9479759ce05a3e44aa9bb4c43a8f46b1, type: 3}
-    - {fileID: 3496079931029023336, guid: 9479759ce05a3e44aa9bb4c43a8f46b1, type: 3}
-    - {fileID: 5434234561046295851, guid: 9479759ce05a3e44aa9bb4c43a8f46b1, type: 3}
-    - {fileID: -1562462924501872289, guid: 9479759ce05a3e44aa9bb4c43a8f46b1, type: 3}
-    - {fileID: -5974799400567423517, guid: 9479759ce05a3e44aa9bb4c43a8f46b1, type: 3}
-    frameRate: 0.15
-    loop: 0
+    - {fileID: 7857432132856759585, guid: 9479759ce05a3e44aa9bb4c43a8f46b1, type: 3}
+    frameRate: 0.3
+    timer: 0
+    spriteIndex: 0
+    loop: 1
     done: 0
-    mainSprite: {fileID: -4807753606334595397, guid: 9479759ce05a3e44aa9bb4c43a8f46b1, type: 3}
+    mainSprite: {fileID: 7857432132856759585, guid: 9479759ce05a3e44aa9bb4c43a8f46b1, type: 3}
 --- !u!1 &1556105090302600382
 GameObject:
   m_ObjectHideFlags: 0
@@ -158,7 +159,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1556105090302600381}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Feet
   m_TagString: Untagged
   m_Icon: {fileID: 7866945982896999795, guid: 0000000000000000d000000000000000, type: 0}
@@ -191,7 +192,7 @@ GameObject:
   - component: {fileID: 1556105091084007387}
   - component: {fileID: 1556105091084007386}
   - component: {fileID: 1556105091084007364}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -226,8 +227,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b695f8dfe7d1ea4e8fa0c5b03cae36d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  trigger: 0
   gravity: 1
-  gravityScale: 0.2
+  gravityScale: 0.5
   _velocity: {x: 0, y: 0}
   drag: 2
   entity: {fileID: 1556105091084007364}
@@ -252,7 +254,7 @@ MonoBehaviour:
   isColliding: 0
   applyMatrix: 0
   box:
-    position: {x: 0, y: 0}
+    position: {x: -3.5, y: 5}
     center: {x: 0, y: 0}
     width: 1
     height: 1
@@ -270,11 +272,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   boxCollider: {fileID: 1556105091084007386}
-  body: {fileID: 0}
+  body: {fileID: 1556105091084007387}
   interactWith:
     serializedVersion: 2
     m_Bits: 4294967295
-  jumpForce: 0.25
-  speed: 3
+  jumpForce: 0.7
+  speed: 5
   friction: 100
   hasJumped: 0
+  bubblePrefab: {fileID: 4516105670749728344, guid: ce4ce608072ae1e4a8cc0ea5c2ea6b07, type: 3}
+  shootForce: 3

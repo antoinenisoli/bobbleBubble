@@ -7,6 +7,7 @@ namespace CustomPhysics2D
 {
     public class PhysicBody : MonoBehaviour
     {
+        public bool trigger;
         [SerializeField] bool gravity = true;
         [SerializeField] float gravityScale = 0.15f;
         [SerializeField] Vector2 _velocity;
@@ -20,7 +21,6 @@ namespace CustomPhysics2D
         Vector2 lastPos;
         Vector2 futurePos;
         Vector2 impulseVelocity;
-        Vector2 localVelocity;
         readonly Dictionary<PhysicBox, CustomCollision2D> contactCollisions = new Dictionary<PhysicBox, CustomCollision2D>();
 
         Vector2 ComputeVelocity => velocity + impulseVelocity;
@@ -32,9 +32,9 @@ namespace CustomPhysics2D
                 if (value.y != _velocity.y)
                 {
                     impulseVelocity.y = 0;
-                    localVelocity = Vector2.zero;
                 }
 
+                value.x *= Time.fixedDeltaTime;
                 _velocity = value;
             }
         }
@@ -100,7 +100,7 @@ namespace CustomPhysics2D
 
             contactCollisions.Add(col.collider.box, col);
             col.collider.isColliding = true;
-            if (col.normal.y > 0)
+            if (col.normal.y > 0 && !trigger)
             {
                 _velocity.y = 0;
                 transform.position = new Vector2(transform.position.x, col.collider.box.maxY + customCollider.box.height / 2);
@@ -175,16 +175,23 @@ namespace CustomPhysics2D
             }
         }
 
+        void ResolveCollision()
+        {
+            if (trigger)
+                return;
+
+            CheckWalls();
+            IntersectionOffset();
+        }
+
         public virtual void Update()
         {
             contacts = contactCollisions.Values.ToList();
             impulseVelocity.y = Mathf.Lerp(impulseVelocity.y, 0, drag * Time.fixedDeltaTime);
-            transform.Translate(ComputeVelocity);
 
             if (lastPos != (Vector2)transform.position)
             {
-                CheckWalls();
-                IntersectionOffset();
+                ResolveCollision();
                 lastPos = transform.position;
             }
         }
@@ -197,6 +204,7 @@ namespace CustomPhysics2D
             customCollider.box.position = futurePos;
             ManageCollisions();
             inAir = !CheckGround();
+            transform.Translate(ComputeVelocity);
         }
     }
 }

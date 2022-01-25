@@ -6,7 +6,7 @@ namespace CustomPhysics2D
 {
     public class CustomBoxCollider : MonoBehaviour
     {
-        [SerializeField] [Range(0,0.1f)] float gizmoSize = 0.1f;
+        [SerializeField] float gizmoSize = 0.1f;
         [SerializeField] Color gizmoColor = Color.white;
         [SerializeField] SpriteRenderer spr;
         public bool isColliding;
@@ -60,8 +60,11 @@ namespace CustomPhysics2D
 
         void DisplayBox(PhysicBox box, Vector2 positionOffset = default)
         {
-            Color r = gizmoColor;
-            Gizmos.color = r;
+            Color c = gizmoColor;
+            c.a = 1;
+            Gizmos.color = c;
+            Gizmos.DrawWireCube(transform.position - (Vector3)positionOffset, new Vector2(box.width, box.height));
+            Gizmos.color = gizmoColor;
             Gizmos.DrawCube(transform.position - (Vector3)positionOffset, new Vector2(box.width, box.height));
             Gizmos.DrawSphere(box.topRightCorner - positionOffset, gizmoSize);
             Gizmos.DrawSphere(box.topLeftCorner - positionOffset, gizmoSize);

@@ -8,8 +8,8 @@ public class CustomAnimation
     public string name = "Idle";
     public Sprite[] sprites;
     public float frameRate = 0.1f;
-    protected float timer;
-    protected int spriteIndex;
+    public float timer;
+    public int spriteIndex;
     public bool loop = true;
     public bool done = false;
     public Sprite mainSprite;

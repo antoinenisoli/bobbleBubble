@@ -29,6 +29,12 @@ public class PlayerController : PhysicalEntity
     float xInput;
     int xDirection = 1;
 
+    [Header("Shoot bubbles")]
+    [SerializeField] GameObject bubblePrefab;
+    [SerializeField] float shootForce = 0.1f;
+    PlayerAnimationManager animManager;
+    float shootTimer;
+
     private void OnDrawGizmos()
     {
         if (boxCollider.box != null)
@@ -39,6 +45,7 @@ public class PlayerController : PhysicalEntity
     {
         base.Awake();
         sprRenderer = GetComponentInChildren<SpriteRenderer>();
+        animManager = sprRenderer.GetComponent<PlayerAnimationManager>();
     }
 
     void Jump()
@@ -60,6 +67,10 @@ public class PlayerController : PhysicalEntity
             EventManager.Instance.onPlayerLanding.Invoke();
             hasJumped = false;
         }
+
+        Bubble bubble = col.collider.GetComponent<Bubble>();
+        if (bubble)
+            Jump();
     }
 
     void ManageGraphics()
@@ -81,8 +92,38 @@ public class PlayerController : PhysicalEntity
         else
         {
             float velocity = speed * xInput;
-            velocity *= Time.fixedDeltaTime;
             body.velocity = new Vector2(velocity, body.velocity.y);
+        }
+    }
+
+    void Shoot()
+    {
+        animManager.Shoot();
+        GameObject bubble = Instantiate(bubblePrefab, transform.position, Quaternion.identity);
+        PhysicBody body = bubble.GetComponent<PhysicBody>();
+        body.velocity = Vector2.right * xDirection * shootForce;
+    }
+
+    void ManageShooting()
+    {
+        shootTimer += Time.deltaTime;
+        if (shootTimer > 0.25f)
+        {
+            if (Input.GetButtonDown("Shoot"))
+            {
+                Shoot();
+                shootTimer = 0;
+            }
+        }
+    }
+
+    void InAir()
+    {
+        if (!body.inAir)
+        {
+            body.velocity = new Vector2(body.velocity.x, 0);
+            if (Input.GetButtonDown("Jump"))
+                Jump();
         }
     }
 
@@ -91,13 +132,8 @@ public class PlayerController : PhysicalEntity
         base.Update();
         xInput = Input.GetAxisRaw("Horizontal");
         ManageGraphics();
-
-        if (!body.inAir)
-        {
-            body.velocity = new Vector2(body.velocity.x, 0);
-            if (Input.GetButtonDown("Jump"))
-                Jump();
-        }
+        ManageShooting();
+        InAir();
     }
 
     public override void FixedUpdate()
