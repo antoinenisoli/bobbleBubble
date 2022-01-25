@@ -6,10 +6,9 @@ using UnityEngine.Tilemaps;
 
 namespace CustomPhysics2D
 {
-    public class Physics2d_Manager : MonoBehaviour
+    public class PhysicsManager : MonoBehaviour
     {
-        public static Physics2d_Manager instance;
-        public Vector2 baseGravity = Vector2.up * -9.81f;
+        public static PhysicsManager instance;
         public List<CustomBoxCollider> colliders;
 
         [Header("Tilemap generation")]

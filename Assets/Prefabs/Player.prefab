@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1556105089974699073}
   - component: {fileID: 1556105089974699072}
+  - component: {fileID: 113023131796579811}
   - component: {fileID: 1556105089974699079}
   m_Layer: 0
   m_Name: Sprite
@@ -71,7 +72,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1500
   m_Sprite: {fileID: -7067176810482676727, guid: 9479759ce05a3e44aa9bb4c43a8f46b1, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 1
@@ -83,6 +84,18 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &113023131796579811
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1556105089974699074}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0805d3efc03f3a748931bb51883c1a2a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &1556105089974699079
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -102,9 +115,40 @@ MonoBehaviour:
     sprites:
     - {fileID: -7067176810482676727, guid: 9479759ce05a3e44aa9bb4c43a8f46b1, type: 3}
     - {fileID: -8245866535709944135, guid: 9479759ce05a3e44aa9bb4c43a8f46b1, type: 3}
-    frameRate: 0.5
+    frameRate: 0.3
     loop: 1
-    mainSprite: {fileID: 0}
+    done: 0
+    mainSprite: {fileID: -7067176810482676727, guid: 9479759ce05a3e44aa9bb4c43a8f46b1, type: 3}
+  - name: Jump
+    sprites:
+    - {fileID: 3612436730172642894, guid: 9479759ce05a3e44aa9bb4c43a8f46b1, type: 3}
+    - {fileID: 7501396002627147396, guid: 9479759ce05a3e44aa9bb4c43a8f46b1, type: 3}
+    frameRate: 0.3
+    loop: 1
+    done: 0
+    mainSprite: {fileID: 3612436730172642894, guid: 9479759ce05a3e44aa9bb4c43a8f46b1, type: 3}
+  - name: Air
+    sprites:
+    - {fileID: -4807753606334595397, guid: 9479759ce05a3e44aa9bb4c43a8f46b1, type: 3}
+    - {fileID: 4855259807885441979, guid: 9479759ce05a3e44aa9bb4c43a8f46b1, type: 3}
+    frameRate: 0.3
+    loop: 1
+    done: 0
+    mainSprite: {fileID: -4807753606334595397, guid: 9479759ce05a3e44aa9bb4c43a8f46b1, type: 3}
+  - name: Shoot
+    sprites:
+    - {fileID: -354626060968229937, guid: 9479759ce05a3e44aa9bb4c43a8f46b1, type: 3}
+    - {fileID: 904064935985447064, guid: 9479759ce05a3e44aa9bb4c43a8f46b1, type: 3}
+    - {fileID: 5169088989095445609, guid: 9479759ce05a3e44aa9bb4c43a8f46b1, type: 3}
+    - {fileID: 4160169947384030945, guid: 9479759ce05a3e44aa9bb4c43a8f46b1, type: 3}
+    - {fileID: 3496079931029023336, guid: 9479759ce05a3e44aa9bb4c43a8f46b1, type: 3}
+    - {fileID: 5434234561046295851, guid: 9479759ce05a3e44aa9bb4c43a8f46b1, type: 3}
+    - {fileID: -1562462924501872289, guid: 9479759ce05a3e44aa9bb4c43a8f46b1, type: 3}
+    - {fileID: -5974799400567423517, guid: 9479759ce05a3e44aa9bb4c43a8f46b1, type: 3}
+    frameRate: 0.15
+    loop: 0
+    done: 0
+    mainSprite: {fileID: -4807753606334595397, guid: 9479759ce05a3e44aa9bb4c43a8f46b1, type: 3}
 --- !u!1 &1556105090302600382
 GameObject:
   m_ObjectHideFlags: 0
@@ -162,7 +206,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1556105091084007367}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.71, y: -0.061, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1556105089974699073}
@@ -182,12 +226,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b695f8dfe7d1ea4e8fa0c5b03cae36d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gravityScale: 0.2
-  velocity: {x: 0, y: 0}
-  maxVelocity: {x: 0, y: -10}
-  drag: 2
   gravity: 1
+  gravityScale: 0.2
+  _velocity: {x: 0, y: 0}
+  drag: 2
   entity: {fileID: 1556105091084007364}
+  inAir: 0
+  onWall: 0
+  contacts: []
 --- !u!114 &1556105091084007386
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -206,7 +252,7 @@ MonoBehaviour:
   isColliding: 0
   applyMatrix: 0
   box:
-    position: {x: -6.5, y: 1.5}
+    position: {x: 0, y: 0}
     center: {x: 0, y: 0}
     width: 1
     height: 1
@@ -224,9 +270,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   boxCollider: {fileID: 1556105091084007386}
-  inAir: 0
-  onWall: 0
-  contacts: []
+  body: {fileID: 0}
+  interactWith:
+    serializedVersion: 2
+    m_Bits: 4294967295
   jumpForce: 0.25
   speed: 3
   friction: 100
+  hasJumped: 0

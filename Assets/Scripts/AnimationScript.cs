@@ -3,41 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-[System.Serializable]
-public class CustomAnimation
-{
-    public string name = "Idle";
-    public Sprite[] sprites;
-    public float frameRate = 0.1f;
-    protected float timer;
-    protected int spriteIndex;
-    public bool loop = true;
-    public Sprite mainSprite;
-
-    public void Init()
-    {
-        mainSprite = sprites[0];
-    }
-
-    public void Update()
-    {
-        timer += Time.deltaTime;
-        if (timer > frameRate && loop)
-        {
-            timer = 0;
-            spriteIndex++;
-            mainSprite = sprites[spriteIndex % sprites.Length];
-        }
-    }
-
-    public void Stop()
-    {
-        loop = false;
-        timer = 0;
-        spriteIndex = 0;
-    }
-}
-
 public class AnimationScript : MonoBehaviour
 {
     [SerializeField] string startAnim = "Idle";
@@ -45,6 +10,7 @@ public class AnimationScript : MonoBehaviour
     [SerializeField] protected CustomAnimation[] animations;
     Dictionary<string, CustomAnimation> customAnimations = new Dictionary<string, CustomAnimation>();
     CustomAnimation currentAnim;
+    CustomAnimation previousAnim;
 
     private void Awake()
     {
@@ -57,12 +23,37 @@ public class AnimationScript : MonoBehaviour
 
     private void Start()
     {
-        StartAnim(startAnim);
+        SetCurrentAnim(startAnim);
     }
 
-    void StartAnim(string name)
+    public void SetCurrentAnim(string name)
     {
+        if (previousAnim != null)
+            return;
+
+        if (currentAnim != null)
+            currentAnim.Stop();
+
         currentAnim = customAnimations[name];
+    }
+
+    public void PlayAnimOnce(string name)
+    {
+        print("play anim " + name);
+        StopAllCoroutines();
+        previousAnim = currentAnim;
+        currentAnim = customAnimations[name];
+        StartCoroutine(Anim());
+    }
+
+    IEnumerator Anim()
+    {
+        while (!currentAnim.done)
+            yield return null;
+
+        currentAnim.Stop();
+        currentAnim = previousAnim;
+        previousAnim = null;
     }
 
     private void Update()

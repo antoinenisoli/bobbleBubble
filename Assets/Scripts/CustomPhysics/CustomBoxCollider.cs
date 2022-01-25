@@ -42,6 +42,7 @@ namespace CustomPhysics2D
         void ApplyTransform()
         {
             box.position = transform.position + (Vector3)box.center;
+
             if (spr)
             {
                 if (spr.drawMode != SpriteDrawMode.Tiled)
@@ -70,11 +71,6 @@ namespace CustomPhysics2D
             Gizmos.DrawSphere(new Vector2(box.position.x, box.maxY) - positionOffset, gizmoSize);
             Gizmos.DrawSphere(new Vector2(box.position.x, box.minY) - positionOffset, gizmoSize);
             Gizmos.DrawSphere(box.bottomRightCorner - positionOffset, gizmoSize);
-        }
-
-        private void FixedUpdate()
-        {
-            ApplyTransform();
         }
     }
 }

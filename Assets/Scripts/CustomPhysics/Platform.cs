@@ -6,7 +6,7 @@ namespace CustomPhysics2D
 {
     public class Platform : MonoBehaviour
     {
-        CustomPhysics_PlayerController player;
+        PlayerController player;
         BoxCollider2D box;
         [SerializeField] CustomBoxCollider boxCollider;
         [SerializeField] bool collidable = true;
@@ -21,7 +21,7 @@ namespace CustomPhysics2D
 
         private void Awake()
         {
-            player = FindObjectOfType<CustomPhysics_PlayerController>();
+            player = FindObjectOfType<PlayerController>();
             box = GetComponent<BoxCollider2D>();
         }
 
