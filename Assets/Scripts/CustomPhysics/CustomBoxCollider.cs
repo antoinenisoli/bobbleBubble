@@ -19,6 +19,18 @@ namespace CustomPhysics2D
                 Show();
         }
 
+        private void Awake()
+        {
+            if (EventManager.Instance)
+                EventManager.Instance.onNewBodyCreated.Invoke(this);
+        }
+
+        private void OnDestroy()
+        {
+            if (EventManager.Instance)
+                EventManager.Instance.onBodyRemove.Invoke(this);
+        }
+
         public void SetBox(PhysicBox box)
         {
             this.box = box;

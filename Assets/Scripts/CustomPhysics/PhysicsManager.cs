@@ -28,6 +28,22 @@ namespace CustomPhysics2D
             colliders = FindObjectsOfType<CustomBoxCollider>().ToList();
         }
 
+        private void Start()
+        {
+            EventManager.Instance.onNewBodyCreated.AddListener(AddCollider);
+            EventManager.Instance.onBodyRemove.AddListener(RemoveCollider);
+        }
+
+        public void AddCollider(CustomBoxCollider collider)
+        {
+            colliders.Add(collider);
+        }
+
+        public void RemoveCollider(CustomBoxCollider collider)
+        {
+            colliders.Remove(collider);
+        }
+
         private void CreateBlockTilemap()
         {
             foreach (var pos in tilemap.cellBounds.allPositionsWithin)

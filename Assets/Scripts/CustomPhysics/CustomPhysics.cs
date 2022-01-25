@@ -8,12 +8,9 @@ namespace CustomPhysics2D
     {
         public static float GravityValue = -9.81f;
 
-        public static bool CompareLayer(LayerMask layerMask, LayerMask layer)
+        public static bool CompareLayer(LayerMask layerMask, int layer)
         {
-            if (layerMask.value == 1 << layer) 
-                return true;
-
-            return false;
+            return layerMask == (layerMask | (1 << layer));
         }
 
         public static bool CheckAABB(PhysicBox b1, PhysicBox b2)

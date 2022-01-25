@@ -35,7 +35,7 @@ public class PlayerController : PhysicalEntity
     PlayerAnimationManager animManager;
     float shootTimer;
 
-    private void OnDrawGizmos()
+    private void OnDrawGizmosSelected()
     {
         if (boxCollider.box != null)
             boxCollider.Show();
@@ -61,16 +61,17 @@ public class PlayerController : PhysicalEntity
     public override void EnterBoxCollision(CustomCollision2D col)
     {
         base.EnterBoxCollision(col);
-
-        if (col.normal.y > 0)
+        Bubble bubble = col.collider.GetComponent<Bubble>();
+        if (bubble)
+        {
+            if (body.inAir && col.normal.y > 0)
+                Jump();
+        }
+        else if (col.normal.y > 0)
         {
             EventManager.Instance.onPlayerLanding.Invoke();
             hasJumped = false;
         }
-
-        Bubble bubble = col.collider.GetComponent<Bubble>();
-        if (bubble)
-            Jump();
     }
 
     void ManageGraphics()
@@ -99,9 +100,9 @@ public class PlayerController : PhysicalEntity
     void Shoot()
     {
         animManager.Shoot();
-        GameObject bubble = Instantiate(bubblePrefab, transform.position, Quaternion.identity);
-        PhysicBody body = bubble.GetComponent<PhysicBody>();
-        body.velocity = Vector2.right * xDirection * shootForce;
+        GameObject newBubble = Instantiate(bubblePrefab, transform.position, Quaternion.identity);
+        Bubble bubble = newBubble.GetComponent<Bubble>();
+        bubble.Shoot(Vector2.right * xDirection, shootForce);
     }
 
     void ManageShooting()

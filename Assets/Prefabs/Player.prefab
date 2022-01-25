@@ -248,7 +248,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5b220e22010fef4b87aceb120a56688, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gizmoSize: 0.088
+  gizmoSize: 0.15
   gizmoColor: {r: 0, g: 0.2876296, b: 1, a: 0.44705883}
   spr: {fileID: 0}
   isColliding: 0

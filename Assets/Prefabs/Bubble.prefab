@@ -73,7 +73,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 1649192393020575799, guid: ab435226f84769e4081f6beedcf133ee, type: 3}
+  m_Sprite: {fileID: -1131802689570784725, guid: ab435226f84769e4081f6beedcf133ee, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -210,8 +210,8 @@ MonoBehaviour:
   box:
     position: {x: -8.02, y: 0.29}
     center: {x: 0, y: 0}
-    width: 1
-    height: 1
+    width: 0.5
+    height: 0.5
     additionalSize: {x: 0, y: 0}
 --- !u!114 &4516105670749728348
 MonoBehaviour:
@@ -229,5 +229,5 @@ MonoBehaviour:
   body: {fileID: 4516105670749728350}
   interactWith:
     serializedVersion: 2
-    m_Bits: 4294967295
-  animationManager: {fileID: 4151722445532662018}
+    m_Bits: 447
+  direction: {x: 0, y: 0}

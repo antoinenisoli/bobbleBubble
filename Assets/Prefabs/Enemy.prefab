@@ -46,6 +46,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b695f8dfe7d1ea4e8fa0c5b03cae36d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  trigger: 0
   gravity: 1
   gravityScale: 0.2
   _velocity: {x: 0, y: 0}
@@ -66,7 +67,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5b220e22010fef4b87aceb120a56688, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gizmoSize: 0.1
+  gizmoSize: 0.15
   gizmoColor: {r: 1, g: 0.46728036, b: 0.43137252, a: 0.50980395}
   spr: {fileID: 0}
   isColliding: 0

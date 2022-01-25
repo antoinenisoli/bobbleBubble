@@ -867,6 +867,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: Enemy
       objectReference: {fileID: 0}
+    - target: {fileID: 5291008845621336834, guid: 0059d73cd59081c488b6446e664716c3, type: 3}
+      propertyPath: box.position.x
+      value: 0.9231825
+      objectReference: {fileID: 0}
+    - target: {fileID: 5291008845621336834, guid: 0059d73cd59081c488b6446e664716c3, type: 3}
+      propertyPath: box.position.y
+      value: -2.6590834
+      objectReference: {fileID: 0}
     - target: {fileID: 5291008845621336860, guid: 0059d73cd59081c488b6446e664716c3, type: 3}
       propertyPath: m_RootOrder
       value: 1
@@ -1101,17 +1109,21 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1556105091084007364, guid: 44b29c9a41b70f042b1924a9c9cf04e4, type: 3}
+      propertyPath: interactWith.m_Bits
+      value: 383
+      objectReference: {fileID: 0}
     - target: {fileID: 1556105091084007366, guid: 44b29c9a41b70f042b1924a9c9cf04e4, type: 3}
       propertyPath: m_RootOrder
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 1556105091084007366, guid: 44b29c9a41b70f042b1924a9c9cf04e4, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -5.67
+      value: -4.72
       objectReference: {fileID: 0}
     - target: {fileID: 1556105091084007366, guid: 44b29c9a41b70f042b1924a9c9cf04e4, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 3.55
+      value: -0.21
       objectReference: {fileID: 0}
     - target: {fileID: 1556105091084007366, guid: 44b29c9a41b70f042b1924a9c9cf04e4, type: 3}
       propertyPath: m_LocalPosition.z
@@ -1149,6 +1161,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 1556105091084007367, guid: 44b29c9a41b70f042b1924a9c9cf04e4, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1556105091084007386, guid: 44b29c9a41b70f042b1924a9c9cf04e4, type: 3}
+      propertyPath: box.position.x
+      value: -5.67
+      objectReference: {fileID: 0}
+    - target: {fileID: 1556105091084007386, guid: 44b29c9a41b70f042b1924a9c9cf04e4, type: 3}
+      propertyPath: box.position.y
+      value: 3.55
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 44b29c9a41b70f042b1924a9c9cf04e4, type: 3}
 --- !u!1001 &4516105671711122563
@@ -1162,17 +1186,25 @@ PrefabInstance:
       propertyPath: m_Name
       value: Bubble
       objectReference: {fileID: 0}
+    - target: {fileID: 4516105670749728348, guid: ce4ce608072ae1e4a8cc0ea5c2ea6b07, type: 3}
+      propertyPath: force
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4516105670749728348, guid: ce4ce608072ae1e4a8cc0ea5c2ea6b07, type: 3}
+      propertyPath: direction.x
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4516105670749728349, guid: ce4ce608072ae1e4a8cc0ea5c2ea6b07, type: 3}
       propertyPath: m_RootOrder
       value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 4516105670749728349, guid: ce4ce608072ae1e4a8cc0ea5c2ea6b07, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -8.02
+      value: -8.68
       objectReference: {fileID: 0}
     - target: {fileID: 4516105670749728349, guid: ce4ce608072ae1e4a8cc0ea5c2ea6b07, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.29
+      value: 0.03
       objectReference: {fileID: 0}
     - target: {fileID: 4516105670749728349, guid: ce4ce608072ae1e4a8cc0ea5c2ea6b07, type: 3}
       propertyPath: m_LocalPosition.z
@@ -1204,6 +1236,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4516105670749728349, guid: ce4ce608072ae1e4a8cc0ea5c2ea6b07, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4516105670749728350, guid: ce4ce608072ae1e4a8cc0ea5c2ea6b07, type: 3}
+      propertyPath: _velocity.x
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []

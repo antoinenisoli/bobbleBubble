@@ -38,7 +38,6 @@ public class AnimationScript : MonoBehaviour
         {
             if (stateName != previousAnim)
             {
-                print("play anim loop " + stateName);
                 currentAnim = customAnimations[stateName];
                 previousAnim = stateName;
             }
@@ -54,7 +53,6 @@ public class AnimationScript : MonoBehaviour
 
         if (stateName != previousAnim)
         {
-            print("play anim " + stateName);
             done = false;
             StopAllCoroutines();
             currentAnim = GetAnimation(stateName);

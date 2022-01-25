@@ -35,6 +35,7 @@ namespace CustomPhysics2D
                 }
 
                 value.x *= Time.fixedDeltaTime;
+                value.y *= Time.fixedDeltaTime;
                 _velocity = value;
             }
         }
@@ -86,11 +87,23 @@ namespace CustomPhysics2D
         {
             foreach (var collision in contactCollisions.Values)
             {
-                if (collision.normal.y > 0)
-                    return true;
+                if (collision.collider == null)
+                    continue;
+                else
+                {
+                    if (!IgnoreCollide(collision.collider.gameObject))
+                        continue;
+                    if (collision.normal.y > 0)
+                        return true;
+                }
             }
 
             return false;
+        }
+
+        public bool IgnoreCollide(GameObject other)
+        {
+            return !trigger && CustomPhysics.CompareLayer(entity.interactWith, other.layer);
         }
 
         public void EnterBoxCollision(CustomCollision2D col)
@@ -100,7 +113,7 @@ namespace CustomPhysics2D
 
             contactCollisions.Add(col.collider.box, col);
             col.collider.isColliding = true;
-            if (col.normal.y > 0 && !trigger)
+            if (col.normal.y > 0 && IgnoreCollide(col.collider.gameObject))
             {
                 _velocity.y = 0;
                 transform.position = new Vector2(transform.position.x, col.collider.box.maxY + customCollider.box.height / 2);
@@ -146,7 +159,7 @@ namespace CustomPhysics2D
         {
             foreach (var item in contactCollisions.Values)
             {
-                if (item.normal.sqrMagnitude == 0)
+                if (item.normal.sqrMagnitude == 0 || !IgnoreCollide(item.collider.gameObject))
                     continue;
 
                 onWall = item.normal.x != 0;
@@ -159,18 +172,18 @@ namespace CustomPhysics2D
         {
             foreach (var item in contactCollisions.Values)
             {
-                if (item.normal.y == 0)
+                if (item.normal.y != 0 || !IgnoreCollide(item.collider.gameObject))
+                    continue;
+
+                if (item.normal.x > 0)
                 {
-                    if (item.normal.x > 0)
-                    {
-                        float diff = customCollider.box.minX - item.collider.box.maxX;
-                        transform.position += Vector3.left * diff;
-                    }
-                    else if (item.normal.x < 0)
-                    {
-                        float diff = customCollider.box.maxX - item.collider.box.minX;
-                        transform.position -= Vector3.right * diff;
-                    }
+                    float diff = customCollider.box.minX - item.collider.box.maxX;
+                    transform.position += Vector3.left * diff;
+                }
+                else if (item.normal.x < 0)
+                {
+                    float diff = customCollider.box.maxX - item.collider.box.minX;
+                    transform.position -= Vector3.right * diff;
                 }
             }
         }

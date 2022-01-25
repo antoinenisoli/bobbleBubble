@@ -10,7 +10,7 @@ namespace CustomPhysics2D
         [Header(nameof(PhysicalEntity))]
         [SerializeField] protected CustomBoxCollider boxCollider;
         public PhysicBody body;
-        [SerializeField] LayerMask interactWith;
+        public LayerMask interactWith;
 
         public virtual void Awake()
         {
