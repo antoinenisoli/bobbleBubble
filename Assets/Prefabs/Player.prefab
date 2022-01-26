@@ -230,12 +230,15 @@ MonoBehaviour:
   trigger: 0
   gravity: 1
   gravityScale: 0.5
-  _velocity: {x: 0, y: 0}
+  acceleration: 5
   drag: 2
   entity: {fileID: 1556105091084007364}
   inAir: 0
   onWall: 0
   contacts: []
+  impulseVelocity: {x: 0, y: 0}
+  velocity: {x: 0, y: 0}
+  hasJumped: 0
 --- !u!114 &1556105091084007386
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -254,7 +257,7 @@ MonoBehaviour:
   isColliding: 0
   applyMatrix: 0
   box:
-    position: {x: -3.5, y: 5}
+    position: {x: -5.5, y: 1.55}
     center: {x: 0, y: 0}
     width: 1
     height: 1
@@ -275,8 +278,8 @@ MonoBehaviour:
   body: {fileID: 1556105091084007387}
   interactWith:
     serializedVersion: 2
-    m_Bits: 383
-  jumpForce: 1.5
+    m_Bits: 127
+  jumpForce: 0.4
   speed: 5
   friction: 100
   hasJumped: 0

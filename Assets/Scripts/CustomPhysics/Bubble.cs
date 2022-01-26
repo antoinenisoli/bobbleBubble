@@ -35,13 +35,18 @@ namespace CustomPhysics2D
                 return;
 
             Enemy enemy = col.collider.GetComponent<Enemy>();
-            if (enemy && projectile)
+            if (enemy)
             {
-                SoundManager.Instance.PlayAudio("Bubble Bobble SFX (2)");
-                containedEnemy = enemy;
-                enemy.gameObject.SetActive(false);
-                StopAllCoroutines();
-                StartCoroutine(GrowBubble(0f));
+                if (projectile)
+                {
+                    SoundManager.Instance.PlayAudio("Bubble Bobble SFX (2)");
+                    containedEnemy = enemy;
+                    enemy.gameObject.SetActive(false);
+                    StopAllCoroutines();
+                    StartCoroutine(GrowBubble(0f));
+                }
+                else
+                    return;
             }
             else
             {
@@ -55,7 +60,7 @@ namespace CustomPhysics2D
                     direction = Vector2.down;
             }
 
-            body.velocity = direction * currentSpeed;
+            SetVelocity();
         }
 
         private void OnDestroy()
@@ -79,14 +84,19 @@ namespace CustomPhysics2D
             yield return new WaitForSeconds(delay);
             projectile = false;
             currentSpeed = bubbleSpeed;
-            body.velocity = direction * currentSpeed;
+            SetVelocity();
+        }
+
+        void SetVelocity()
+        {
+            body.velocity = direction * currentSpeed * Time.fixedDeltaTime;
         }
 
         public void Shoot(Vector2 dir, float force)
         {
             currentSpeed = force;
             direction = dir;
-            body.velocity = direction * force;
+            SetVelocity();
         }
     }
 }

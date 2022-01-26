@@ -100,7 +100,7 @@ public class PlayerController : PhysicalEntity
             body.velocity = new Vector2(Mathf.Lerp(body.velocity.x, 0, friction * Time.deltaTime), body.velocity.y);
         else
         {
-            float velocity = speed * xInput;
+            float velocity = speed * xInput * Time.fixedDeltaTime;
             body.velocity = new Vector2(velocity, body.velocity.y);
         }
     }

@@ -48,13 +48,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   trigger: 0
   gravity: 1
-  gravityScale: 0.2
-  _velocity: {x: 0, y: 0}
+  gravityScale: 1
+  acceleration: 5
   drag: 2
   entity: {fileID: 702113735032911072}
   inAir: 0
   onWall: 0
   contacts: []
+  impulseVelocity: {x: 0, y: 0}
+  velocity: {x: 0, y: 0}
+  hasJumped: 0
 --- !u!114 &5291008845621336834
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -73,7 +76,7 @@ MonoBehaviour:
   isColliding: 0
   applyMatrix: 0
   box:
-    position: {x: 0, y: 0}
+    position: {x: -1.64, y: 13.42}
     center: {x: 0, y: 0}
     width: 1
     height: 1
@@ -94,7 +97,7 @@ MonoBehaviour:
   body: {fileID: 4887945824405005228}
   interactWith:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 447
   scoreValue: 500
   speed: 0.01
 --- !u!1 &5291008846797084856

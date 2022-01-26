@@ -10,8 +10,8 @@ namespace CustomPhysics2D
         public bool trigger;
         [SerializeField] bool gravity = true;
         [SerializeField] float gravityScale = 0.15f;
-        [SerializeField] Vector2 _velocity;
-        [SerializeField] float drag = 2f;
+        [SerializeField] float acceleration = 0.05f;
+        [SerializeField] float drag = 0.03f;
         [SerializeField] PhysicalEntity entity;
         CustomBoxCollider customCollider;
         public bool inAir;
@@ -20,30 +20,16 @@ namespace CustomPhysics2D
 
         Vector2 lastPos;
         Vector2 futurePos;
-        Vector2 impulseVelocity;
+        [SerializeField] Vector2 impulseVelocity;
         readonly Dictionary<PhysicBox, CustomCollision2D> contactCollisions = new Dictionary<PhysicBox, CustomCollision2D>();
 
-        Vector2 ComputeVelocity => velocity + impulseVelocity;
-        public Vector2 velocity
-        {
-            get => _velocity;
-            set
-            {
-                if (value.y != _velocity.y)
-                {
-                    impulseVelocity.y = 0;
-                }
-
-                value.x *= Time.fixedDeltaTime;
-                value.y *= Time.fixedDeltaTime;
-                _velocity = value;
-            }
-        }
+        public Vector2 velocity;
+        public bool hasJumped;
 
         private void OnDrawGizmos()
         {
             if (!Application.isPlaying)
-                futurePos = (Vector2)transform.position + ComputeVelocity;
+                futurePos = (Vector2)transform.position + velocity;
 
             Gizmos.DrawWireSphere(futurePos, 0.25f);
         }
@@ -55,13 +41,10 @@ namespace CustomPhysics2D
 
         public void AddForce(Vector2 force)
         {
-            impulseVelocity = force;
-        }
+            if (force.y > 0)
+                hasJumped = true;
 
-        void Drag()
-        {
-            _velocity.y = 0;
-            impulseVelocity.y = 0;
+            impulseVelocity = force;
         }
 
         void ApplyGravity()
@@ -71,10 +54,23 @@ namespace CustomPhysics2D
 
             if (customCollider)
             {
-                if (inAir)
-                    _velocity.y = gravityScale * Time.fixedDeltaTime * CustomPhysics.GravityValue;
-                else
-                    Drag();
+                if (hasJumped)
+                {
+                    if (velocity.y < impulseVelocity.y)
+                        velocity.y += acceleration * Time.fixedDeltaTime;
+                    else
+                    {
+                        velocity.y = impulseVelocity.y;
+                        hasJumped = false;
+                    }
+                }
+                else if (inAir)
+                {
+                    if (velocity.y > gravityScale * CustomPhysics.GravityValue * Time.fixedDeltaTime) 
+                        velocity.y -= drag * Time.fixedDeltaTime;
+                    else 
+                        velocity.y = gravityScale * CustomPhysics.GravityValue * Time.fixedDeltaTime;
+                }
             }
         }
 
@@ -115,7 +111,7 @@ namespace CustomPhysics2D
             col.collider.isColliding = true;
             if (col.normal.y > 0 && CanCollide(col.collider.gameObject) && col.collider.gameObject.activeSelf)
             {
-                _velocity.y = 0;
+                velocity.y = 0;
                 transform.position = new Vector2(transform.position.x, col.collider.box.maxY + customCollider.box.height / 2);
             }
         }
@@ -167,7 +163,7 @@ namespace CustomPhysics2D
 
                 onWall = item.normal.x != 0;
                 if (onWall)
-                    _velocity.x = 0;
+                    velocity.x = 0;
             }
         }
 
@@ -228,14 +224,12 @@ namespace CustomPhysics2D
         {
             customCollider.isColliding = IsColliding();
             ApplyGravity();
-            futurePos = (Vector2)transform.position + ComputeVelocity;
+            futurePos = (Vector2)transform.position + velocity;
             customCollider.box.position = futurePos;
             ManageCollisions();
             inAir = !CheckGround();
-            impulseVelocity.y = Mathf.Lerp(impulseVelocity.y, 0, drag * Time.fixedDeltaTime);
-            impulseVelocity.y *= Time.fixedDeltaTime;
 
-            transform.Translate(ComputeVelocity);
+            transform.Translate(velocity);
         }
     }
 }
