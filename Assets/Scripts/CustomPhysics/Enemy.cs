@@ -8,39 +8,30 @@ public class Enemy : PhysicalEntity
 {
     public int scoreValue = 500;
     [SerializeField] float speed = 0.01f;
-    Vector2 direction = Vector2.down;
+    [SerializeField] int direction = 1;
 
     public override void EnterBoxCollision(CustomCollision2D col)
     {
         base.EnterBoxCollision(col);
-        if (col.normal.y > 0)
-            direction = Vector2.left;
-        else if (col.normal.y < 0)
-            direction = Vector2.right;
-        else if (col.normal.x > 0)
-            direction = Vector2.up;
-        else if (col.normal.x < 0)
-            direction = Vector2.down;
+        if (CustomPhysics.CompareLayer(interactWith, col.collider.gameObject.layer) && col.normal.x != 0)
+            direction *= -1;
     }
 
-    public override void ExitBoxCollision(CustomCollision2D col)
+    void ManageGraphics()
     {
-        base.ExitBoxCollision(col);
-        Vector2 normal = CustomPhysics.GetNormal(col.collider.box, boxCollider.box);
-        if (normal.y > 0)
-            direction = Vector2.down;
-        else if (normal.y < 0)
-            direction = Vector2.up;
-        else if (normal.x > 0)
-            direction = Vector2.left;
-        else if (normal.x < 0)
-            direction = Vector2.right;
+        sprRenderer.flipX = direction > 0;
     }
 
     public override void Update()
     {
         base.Update();
-        Vector2 velocity = speed * Time.deltaTime * direction;
-        //body.velocity = velocity;
+        ManageGraphics();
+    }
+
+    public override void FixedUpdate()
+    {
+        base.FixedUpdate();
+        float velocity = speed * Time.fixedDeltaTime * direction;
+        body.velocity.x = velocity;
     }
 }

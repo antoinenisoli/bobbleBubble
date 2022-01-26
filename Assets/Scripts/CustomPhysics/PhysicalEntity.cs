@@ -11,11 +11,13 @@ namespace CustomPhysics2D
         [SerializeField] protected CustomBoxCollider boxCollider;
         public PhysicBody body;
         public LayerMask interactWith;
+        protected SpriteRenderer sprRenderer;
 
         public virtual void Awake()
         {
             body = GetComponent<PhysicBody>();
             boxCollider = GetComponent<CustomBoxCollider>();
+            sprRenderer = GetComponentInChildren<SpriteRenderer>();
         }
 
         public virtual void EnterBoxCollision(CustomCollision2D col)

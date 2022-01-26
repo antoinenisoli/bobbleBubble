@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.Tilemaps;
+using UnityEngine.SceneManagement;
 
 namespace CustomPhysics2D
 {
@@ -75,6 +76,12 @@ namespace CustomPhysics2D
                 if (tilemap.HasTile(localPlace))
                     Instantiate(blockPrefab, place, Quaternion.identity);
             }
+        }
+
+        private void Update()
+        {
+            if (Input.GetKeyDown(KeyCode.Escape))
+                Application.Quit();
         }
     }
 }

@@ -15,6 +15,10 @@ namespace CustomPhysics2D
         [SerializeField] float bubbleSpeed = 1f;
         Enemy containedEnemy;
 
+        float swipeDirectionTimer;
+        float swipeDirectionCooldown;
+        [SerializeField] Vector2 randomTimerRange;
+
         public bool contains => containedEnemy != null;
 
         public override void Awake()
@@ -28,6 +32,39 @@ namespace CustomPhysics2D
             StartCoroutine(GrowBubble(bubbleDelay));
         }
 
+        float RandomCooldown()
+        {
+            return Random.Range(randomTimerRange.x, randomTimerRange.y + 1);
+        }
+
+        public void AbsorbEnemy(Enemy enemy)
+        {
+            SoundManager.Instance.PlayAudio("Bubble Bobble SFX (2)");
+            containedEnemy = enemy;
+            enemy.gameObject.SetActive(false);
+            StopAllCoroutines();
+            StartCoroutine(GrowBubble(0f));
+        }
+
+        Vector2 RandomDirection()
+        {
+            int random = Random.Range(0, 5);
+            if (direction.x != 0)
+            {
+                if (random > 0)
+                    return Vector2.up;
+                else
+                    return Vector2.down;
+            }
+            else
+            {
+                if (random > 0)
+                    return Vector2.left;
+                else
+                    return Vector2.right;
+            }
+        }
+
         public override void EnterBoxCollision(CustomCollision2D col)
         {
             base.EnterBoxCollision(col);
@@ -38,43 +75,28 @@ namespace CustomPhysics2D
             if (enemy)
             {
                 if (projectile)
-                {
-                    SoundManager.Instance.PlayAudio("Bubble Bobble SFX (2)");
-                    containedEnemy = enemy;
-                    enemy.gameObject.SetActive(false);
-                    StopAllCoroutines();
-                    StartCoroutine(GrowBubble(0f));
-                }
+                    AbsorbEnemy(enemy);
                 else
                     return;
             }
-            else
-            {
-                if (col.normal.y > 0)
-                    direction = Vector2.left;
-                else if (col.normal.y < 0)
-                    direction = Vector2.right;
-                else if (col.normal.x > 0)
-                    direction = Vector2.up;
-                else if (col.normal.x < 0)
-                    direction = Vector2.down;
-            }
+        }
 
-            SetVelocity();
+        public void DeathFeedback()
+        {
+            SoundManager.Instance.PlayAudio("Bubble Bobble SFX (17)");
+            GameplayManager.instance.AddScore(containedEnemy.scoreValue);
+            VFXManager.Instance.PlayVFX("EnemyDeath", transform.position);
+            GameObject fx = VFXManager.Instance.PlayVFX("ScoreText", transform.position);
+            FloatingText text = fx.GetComponent<FloatingText>();
+            if (text)
+                text.Create(containedEnemy.scoreValue);
         }
 
         private void OnDestroy()
         {
             if (contains)
             {
-                SoundManager.Instance.PlayAudio("Bubble Bobble SFX (17)");
-                GameplayManager.instance.AddScore(containedEnemy.scoreValue);
-                VFXManager.Instance.PlayVFX("EnemyDeath", transform.position);
-                GameObject fx = VFXManager.Instance.PlayVFX("ScoreText", transform.position);
-                FloatingText text = fx.GetComponent<FloatingText>();
-                if (text)
-                    text.Create(containedEnemy.scoreValue);
-
+                DeathFeedback();
                 Destroy(containedEnemy.gameObject);
             }
         }
@@ -84,7 +106,9 @@ namespace CustomPhysics2D
             yield return new WaitForSeconds(delay);
             projectile = false;
             currentSpeed = bubbleSpeed;
+            direction = Vector2.up;
             SetVelocity();
+            swipeDirectionCooldown = RandomCooldown();
         }
 
         void SetVelocity()
@@ -97,6 +121,59 @@ namespace CustomPhysics2D
             currentSpeed = force;
             direction = dir;
             SetVelocity();
+        }
+
+        public void SwipeDirection()
+        {
+            swipeDirectionTimer = 0;
+            swipeDirectionCooldown = RandomCooldown();
+            direction = RandomDirection();
+            SetVelocity();
+        }
+
+        void KeepInScreen()
+        {
+            Vector2 stageDimensions = Camera.main.ScreenToWorldPoint(new Vector2(Screen.width, Screen.height));
+            if (transform.position.x > stageDimensions.x - boxCollider.box.width)
+            {
+                transform.position = new Vector2(stageDimensions.x - boxCollider.box.width, transform.position.y);
+                SwipeDirection();
+            }
+            if (transform.position.x < -stageDimensions.x)
+            {
+                transform.position = new Vector2(-stageDimensions.x + boxCollider.box.width, transform.position.y);
+                SwipeDirection();
+            }
+
+            if (transform.position.y > stageDimensions.y - boxCollider.box.width)
+            {
+                transform.position = new Vector2(stageDimensions.y - boxCollider.box.width, transform.position.y);
+                SwipeDirection();
+            }
+            if (transform.position.y < -stageDimensions.y / 2 + boxCollider.box.width)
+            {
+                transform.position = new Vector2(-stageDimensions.y / 2 + boxCollider.box.width, transform.position.y);
+                SwipeDirection();
+            }
+        }
+
+        public override void Update()
+        {
+            base.Update();
+            if (!projectile)
+            {
+                swipeDirectionTimer += Time.deltaTime;
+                if (swipeDirectionTimer > swipeDirectionCooldown)
+                    SwipeDirection();
+            }
+
+            //KeepInScreen();
+        }
+
+        public override void FixedUpdate()
+        {
+            base.FixedUpdate();
+            KeepInScreen();
         }
     }
 }

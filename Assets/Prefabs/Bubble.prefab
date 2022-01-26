@@ -195,12 +195,15 @@ MonoBehaviour:
   trigger: 1
   gravity: 0
   gravityScale: 0
-  _velocity: {x: 0, y: 0}
+  acceleration: 0.05
   drag: 0.1
   entity: {fileID: 4516105670749728348}
   inAir: 0
   onWall: 0
   contacts: []
+  impulseVelocity: {x: 0, y: 0}
+  velocity: {x: 0, y: 0}
+  hasJumped: 0
 --- !u!114 &4516105670749728351
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -245,5 +248,5 @@ MonoBehaviour:
   currentSpeed: 0
   bubbleDelay: 0.25
   projectile: 1
-  bubbleSpeed: 3
-  maxContainingDuration: 50
+  bubbleSpeed: 1.5
+  randomTimerRange: {x: 1, y: 1}

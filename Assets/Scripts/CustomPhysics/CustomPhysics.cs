@@ -40,8 +40,6 @@ namespace CustomPhysics2D
 
             if (b1.minX <= b2.minX && b2.minX <= b1.maxX && b1.maxX < b2.maxX)
                 normal.x = -1;
-            /*if (b2.minX <= b1.minX && b1.minX <= b2.maxX && b2.maxX < b1.maxX)
-                normal.x = 1;*/
 
             if (b1.minY <= b2.minY && b2.minY <= b1.maxY && b1.maxY <= b2.maxY)
                 normal.y = -1;

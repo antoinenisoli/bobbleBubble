@@ -24,7 +24,6 @@ public class PlayerController : PhysicalEntity
     [SerializeField] float jumpForce = 5f;
     [SerializeField] float speed = 0.01f;
     [SerializeField] float friction = 0.01f;
-    SpriteRenderer sprRenderer;
     public bool hasJumped;
     float xInput;
     int xDirection = 1;
@@ -44,7 +43,6 @@ public class PlayerController : PhysicalEntity
     public override void Awake()
     {
         base.Awake();
-        sprRenderer = GetComponentInChildren<SpriteRenderer>();
         animManager = sprRenderer.GetComponent<PlayerAnimationManager>();
     }
 

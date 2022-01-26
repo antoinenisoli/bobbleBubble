@@ -56,7 +56,7 @@ MonoBehaviour:
   onWall: 0
   contacts: []
   impulseVelocity: {x: 0, y: 0}
-  velocity: {x: 0, y: 0}
+  velocity: {x: 0.1, y: 0}
   hasJumped: 0
 --- !u!114 &5291008845621336834
 MonoBehaviour:
@@ -76,7 +76,7 @@ MonoBehaviour:
   isColliding: 0
   applyMatrix: 0
   box:
-    position: {x: -1.64, y: 13.42}
+    position: {x: -4.32, y: -5.14}
     center: {x: 0, y: 0}
     width: 1
     height: 1
@@ -97,9 +97,10 @@ MonoBehaviour:
   body: {fileID: 4887945824405005228}
   interactWith:
     serializedVersion: 2
-    m_Bits: 447
+    m_Bits: 63
   scoreValue: 500
-  speed: 0.01
+  speed: 3
+  direction: 1
 --- !u!1 &5291008846797084856
 GameObject:
   m_ObjectHideFlags: 0
