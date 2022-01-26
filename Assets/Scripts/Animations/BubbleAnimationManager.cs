@@ -6,15 +6,21 @@ using CustomPhysics2D;
 public class BubbleAnimationManager : MonoBehaviour
 {
     AnimationScript anim;
+    Bubble bubble;
 
-    public void Start()
+    public void Awake()
     {
         anim = GetComponent<AnimationScript>();
-        Shoot();
+        bubble = GetComponentInParent<Bubble>();
     }
 
-    public void Shoot()
+    private void Update()
     {
-        anim.PlayAnimOnce("Shoot", "Idle");
+        if (bubble.contains)
+            anim.SetCurrentAnim("ContainsEnemy");
+        else if (bubble.projectile)
+            anim.SetCurrentAnim("Shoot");
+        else
+            anim.SetCurrentAnim("Idle");
     }
 }

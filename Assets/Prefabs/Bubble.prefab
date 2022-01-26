@@ -135,6 +135,17 @@ MonoBehaviour:
     loop: 1
     done: 0
     mainSprite: {fileID: 1649192393020575799, guid: ab435226f84769e4081f6beedcf133ee, type: 3}
+  - name: ContainsEnemy
+    sprites:
+    - {fileID: 4061956409981340134, guid: 14d9f4dd55d01ec42bfa202def158791, type: 3}
+    - {fileID: -1332283400972102418, guid: 14d9f4dd55d01ec42bfa202def158791, type: 3}
+    - {fileID: 2260488930375007086, guid: 14d9f4dd55d01ec42bfa202def158791, type: 3}
+    frameRate: 0.3
+    timer: 0
+    spriteIndex: 0
+    loop: 1
+    done: 0
+    mainSprite: {fileID: 4061956409981340134, guid: 14d9f4dd55d01ec42bfa202def158791, type: 3}
 --- !u!1 &4516105670749728344
 GameObject:
   m_ObjectHideFlags: 0
@@ -208,10 +219,10 @@ MonoBehaviour:
   isColliding: 0
   applyMatrix: 1
   box:
-    position: {x: -8.02, y: 0.29}
+    position: {x: 4.01, y: 2.3}
     center: {x: 0, y: 0}
-    width: 0.5
-    height: 0.5
+    width: 0.75
+    height: 0.75
     additionalSize: {x: 0, y: 0}
 --- !u!114 &4516105670749728348
 MonoBehaviour:
@@ -229,5 +240,13 @@ MonoBehaviour:
   body: {fileID: 4516105670749728350}
   interactWith:
     serializedVersion: 2
-    m_Bits: 447
-  direction: {x: 0, y: 0}
+    m_Bits: 319
+  direction: {x: 1, y: 0}
+  currentSpeed: 0
+  deathFX:
+  - {fileID: 1556783431585577554, guid: e481bee9422e9414187a59c4bfa7b75f, type: 3}
+  - {fileID: 5148034671067266741, guid: d8e2a316d25af8f47b5d679df08e16f3, type: 3}
+  bubbleDelay: 0.25
+  projectile: 1
+  bubbleSpeed: 0.5
+  maxContainingDuration: 50

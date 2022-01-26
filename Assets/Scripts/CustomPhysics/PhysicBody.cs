@@ -91,7 +91,7 @@ namespace CustomPhysics2D
                     continue;
                 else
                 {
-                    if (!IgnoreCollide(collision.collider.gameObject))
+                    if (!CanCollide(collision.collider.gameObject))
                         continue;
                     if (collision.normal.y > 0)
                         return true;
@@ -101,7 +101,7 @@ namespace CustomPhysics2D
             return false;
         }
 
-        public bool IgnoreCollide(GameObject other)
+        public bool CanCollide(GameObject other)
         {
             return !trigger && CustomPhysics.CompareLayer(entity.interactWith, other.layer);
         }
@@ -113,7 +113,7 @@ namespace CustomPhysics2D
 
             contactCollisions.Add(col.collider.box, col);
             col.collider.isColliding = true;
-            if (col.normal.y > 0 && IgnoreCollide(col.collider.gameObject))
+            if (col.normal.y > 0 && CanCollide(col.collider.gameObject) && col.collider.gameObject.activeSelf)
             {
                 _velocity.y = 0;
                 transform.position = new Vector2(transform.position.x, col.collider.box.maxY + customCollider.box.height / 2);
@@ -133,8 +133,11 @@ namespace CustomPhysics2D
         {
             if (customCollider)
             {
-                foreach (var collider in PhysicsManager.instance.colliders)
+                for (int i = 0; i < GameplayManager.instance.colliders.Count; i++)
                 {
+                    CustomBoxCollider collider = GameplayManager.instance.colliders[i];
+                    if (collider == null)
+                        continue;
                     if (collider == customCollider)
                         continue;
 
@@ -159,7 +162,7 @@ namespace CustomPhysics2D
         {
             foreach (var item in contactCollisions.Values)
             {
-                if (item.normal.sqrMagnitude == 0 || !IgnoreCollide(item.collider.gameObject))
+                if (item.normal.sqrMagnitude == 0 || !CanCollide(item.collider.gameObject))
                     continue;
 
                 onWall = item.normal.x != 0;
@@ -172,7 +175,7 @@ namespace CustomPhysics2D
         {
             foreach (var item in contactCollisions.Values)
             {
-                if (item.normal.y != 0 || !IgnoreCollide(item.collider.gameObject))
+                if (item.normal.y != 0 || !CanCollide(item.collider.gameObject))
                     continue;
 
                 if (item.normal.x > 0)
@@ -197,8 +200,21 @@ namespace CustomPhysics2D
             IntersectionOffset();
         }
 
+        void RemoveWrongColliders()
+        {
+            foreach (var item in contactCollisions.Values)
+            {
+                if (!item.collider || !item.collider.gameObject.activeSelf)
+                {
+                    contactCollisions.Remove(item.collider.box);
+                    return;
+                }
+            }
+        }
+
         public virtual void Update()
         {
+            RemoveWrongColliders();
             contacts = contactCollisions.Values.ToList();
             impulseVelocity.y = Mathf.Lerp(impulseVelocity.y, 0, drag * Time.fixedDeltaTime);
 

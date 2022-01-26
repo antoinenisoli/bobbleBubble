@@ -28,6 +28,18 @@ namespace CustomPhysics2D
 
         }
 
+        private void OnEnable()
+        {
+            if (EventManager.Instance)
+                EventManager.Instance.onNewBodyCreated.Invoke(boxCollider);
+        }
+
+        private void OnDisable()
+        {
+            if (EventManager.Instance)
+                EventManager.Instance.onBodyRemove.Invoke(boxCollider);
+        }
+
         public virtual void Update()
         {
             

@@ -6,14 +6,16 @@ using UnityEngine.Tilemaps;
 
 namespace CustomPhysics2D
 {
-    public class PhysicsManager : MonoBehaviour
+    public class GameplayManager : MonoBehaviour
     {
-        public static PhysicsManager instance;
+        public static GameplayManager instance;
         public List<CustomBoxCollider> colliders;
 
         [Header("Tilemap generation")]
         [SerializeField] Tilemap tilemap;
         [SerializeField] GameObject blockPrefab;
+
+        public int Score;
 
         private void Awake()
         {
@@ -36,12 +38,14 @@ namespace CustomPhysics2D
 
         public void AddCollider(CustomBoxCollider collider)
         {
-            colliders.Add(collider);
+            if (!colliders.Contains(collider))
+                colliders.Add(collider);
         }
 
         public void RemoveCollider(CustomBoxCollider collider)
         {
-            colliders.Remove(collider);
+            if (colliders.Contains(collider))
+                colliders.Remove(collider);
         }
 
         private void CreateBlockTilemap()

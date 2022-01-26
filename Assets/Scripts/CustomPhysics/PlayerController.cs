@@ -64,8 +64,17 @@ public class PlayerController : PhysicalEntity
         Bubble bubble = col.collider.GetComponent<Bubble>();
         if (bubble)
         {
-            if (body.inAir && col.normal.y > 0)
-                Jump();
+            if (bubble.contains)
+            {
+                Destroy(bubble.gameObject);
+            }
+            else
+            {
+                if (Input.GetAxisRaw("Vertical") < 0)
+                    Destroy(bubble.gameObject);
+                else if (body.inAir && col.normal.y > 0)
+                    Jump();
+            }
         }
         else if (col.normal.y > 0)
         {

@@ -275,10 +275,10 @@ MonoBehaviour:
   body: {fileID: 1556105091084007387}
   interactWith:
     serializedVersion: 2
-    m_Bits: 4294967295
-  jumpForce: 0.7
+    m_Bits: 383
+  jumpForce: 1.5
   speed: 5
   friction: 100
   hasJumped: 0
   bubblePrefab: {fileID: 4516105670749728344, guid: ce4ce608072ae1e4a8cc0ea5c2ea6b07, type: 3}
-  shootForce: 3
+  shootForce: 20
