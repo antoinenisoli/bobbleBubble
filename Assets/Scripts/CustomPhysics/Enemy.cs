@@ -6,7 +6,7 @@ using CustomPhysics2D;
 
 public class Enemy : PhysicalEntity
 {
-    [SerializeField] Transform[] wayPoints;
+    public int scoreValue = 500;
     [SerializeField] float speed = 0.01f;
     Vector2 direction = Vector2.down;
 

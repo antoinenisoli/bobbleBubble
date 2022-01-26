@@ -1,0 +1,323 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &590734484322871871
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 590734484322871840}
+  m_Layer: 0
+  m_Name: _SCRIPTS
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &590734484322871840
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 590734484322871871}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 590734484780772861}
+  - {fileID: 590734484747850833}
+  - {fileID: 989231059725442405}
+  - {fileID: 2081358159145987492}
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &590734484747850832
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 590734484747850833}
+  - component: {fileID: 590734484747850834}
+  m_Layer: 0
+  m_Name: EventManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &590734484747850833
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 590734484747850832}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 590734484322871840}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &590734484747850834
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 590734484747850832}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c824454518f741b4f9a4b07d49541898, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!1 &590734484780772859
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 590734484780772861}
+  - component: {fileID: 590734484780772860}
+  m_Layer: 0
+  m_Name: GravityManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &590734484780772861
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 590734484780772859}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 590734484322871840}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &590734484780772860
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 590734484780772859}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cb11d84f5e147a142be3a8c3332836e4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  colliders: []
+  tilemap: {fileID: 0}
+  blockPrefab: {fileID: 1039808152209353710, guid: e41a35c7c5e4d3340a9b2f1490f62555, type: 3}
+--- !u!1 &795500770533884853
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2081358159145987492}
+  - component: {fileID: 4874655166674964901}
+  m_Layer: 0
+  m_Name: SoundManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2081358159145987492
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 795500770533884853}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 590734484322871840}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4874655166674964901
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 795500770533884853}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aed67c9894aeb3e4c9629ffce3298437, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  clips: []
+  sounds:
+  - soundType: Bubble Bobble SFX (1)
+    clip: {fileID: 8300000, guid: 6aaf4914c1776b64a93ba461fb56314f, type: 3}
+    volume: 0.3
+    pitch: 1
+    radius: 20
+  - soundType: Bubble Bobble SFX (2)
+    clip: {fileID: 8300000, guid: ec08c5f647dc6a14f94f1639f694f53a, type: 3}
+    volume: 0.3
+    pitch: 1
+    radius: 20
+  - soundType: Bubble Bobble SFX (3)
+    clip: {fileID: 8300000, guid: fff3718575671c34399512d07d086d6c, type: 3}
+    volume: 0.3
+    pitch: 1
+    radius: 20
+  - soundType: Bubble Bobble SFX (4)
+    clip: {fileID: 8300000, guid: ae1fca10e0b42b444a4b23674b03a2cb, type: 3}
+    volume: 0.3
+    pitch: 1
+    radius: 20
+  - soundType: Bubble Bobble SFX (5)
+    clip: {fileID: 8300000, guid: ae78292772a5eeb44bcf477a9e9e637b, type: 3}
+    volume: 0.3
+    pitch: 1
+    radius: 20
+  - soundType: Bubble Bobble SFX (6)
+    clip: {fileID: 8300000, guid: 0f367114b4bb89242820415bf2d40786, type: 3}
+    volume: 0.3
+    pitch: 1
+    radius: 20
+  - soundType: Bubble Bobble SFX (7)
+    clip: {fileID: 8300000, guid: 187f6afecbf77fe4f93eb1f61602145c, type: 3}
+    volume: 0.3
+    pitch: 1
+    radius: 20
+  - soundType: Bubble Bobble SFX (8)
+    clip: {fileID: 8300000, guid: 848b9dbb438e4b34787147cee00e8eda, type: 3}
+    volume: 0.3
+    pitch: 1
+    radius: 20
+  - soundType: Bubble Bobble SFX (9)
+    clip: {fileID: 8300000, guid: 45052bf8526c41f49add4b673bf53d4a, type: 3}
+    volume: 0.3
+    pitch: 1
+    radius: 20
+  - soundType: Bubble Bobble SFX (10)
+    clip: {fileID: 8300000, guid: 9a5dbc983b218e547a9771c49f69b485, type: 3}
+    volume: 0.3
+    pitch: 1
+    radius: 20
+  - soundType: Bubble Bobble SFX (11)
+    clip: {fileID: 8300000, guid: a7163205778bdbb439eb366e441fc2df, type: 3}
+    volume: 0.3
+    pitch: 1
+    radius: 20
+  - soundType: Bubble Bobble SFX (12)
+    clip: {fileID: 8300000, guid: a24f22dda689574419de75f16a8659a3, type: 3}
+    volume: 0.3
+    pitch: 1
+    radius: 20
+  - soundType: Bubble Bobble SFX (13)
+    clip: {fileID: 8300000, guid: 43f42207c194d5447973677fb6be806f, type: 3}
+    volume: 0.3
+    pitch: 1
+    radius: 20
+  - soundType: Bubble Bobble SFX (14)
+    clip: {fileID: 8300000, guid: 81b44524531d6cc4596e4b3b3bed122c, type: 3}
+    volume: 0.3
+    pitch: 1
+    radius: 20
+  - soundType: Bubble Bobble SFX (15)
+    clip: {fileID: 8300000, guid: 10a75802cfdac83449d8e246b00b6e0a, type: 3}
+    volume: 0.3
+    pitch: 1
+    radius: 20
+  - soundType: Bubble Bobble SFX (16)
+    clip: {fileID: 8300000, guid: f758f2d242b73824088949ab6bc96f44, type: 3}
+    volume: 0.3
+    pitch: 1
+    radius: 20
+  - soundType: Bubble Bobble SFX (17)
+    clip: {fileID: 8300000, guid: 8463645c93ecea747adc51112ff6f525, type: 3}
+    volume: 0.3
+    pitch: 1
+    radius: 20
+  - soundType: Bubble Bobble SFX (18)
+    clip: {fileID: 8300000, guid: 3e3830557b76c10439365ce7e570e3a3, type: 3}
+    volume: 0.3
+    pitch: 1
+    radius: 20
+  - soundType: Bubble Bobble SFX (19)
+    clip: {fileID: 8300000, guid: 94ee3fdff09a4574c8b5aa3d06da3a2f, type: 3}
+    volume: 0.3
+    pitch: 1
+    radius: 20
+  - soundType: Bubble Bobble SFX (20)
+    clip: {fileID: 8300000, guid: cb656319966b5854f8083159ba072859, type: 3}
+    volume: 0.3
+    pitch: 1
+    radius: 20
+  - soundType: Bubble Bobble SFX (21)
+    clip: {fileID: 8300000, guid: d9d4ef26d6db11f4181a4db558616e47, type: 3}
+    volume: 0.3
+    pitch: 1
+    radius: 20
+--- !u!1 &5296101155750402652
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 989231059725442405}
+  - component: {fileID: 3264995541635439825}
+  m_Layer: 0
+  m_Name: VFXManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &989231059725442405
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5296101155750402652}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 590734484322871840}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3264995541635439825
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5296101155750402652}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d40ae9c501a7a9146a9be677245c67ed, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  vfx:
+  - prefab: {fileID: 5148034671067266741, guid: d8e2a316d25af8f47b5d679df08e16f3, type: 3}
+    name: EnemyDeath
+  - prefab: {fileID: 1556783431585577554, guid: e481bee9422e9414187a59c4bfa7b75f, type: 3}
+    name: ScoreText

@@ -243,10 +243,7 @@ MonoBehaviour:
     m_Bits: 319
   direction: {x: 1, y: 0}
   currentSpeed: 0
-  deathFX:
-  - {fileID: 1556783431585577554, guid: e481bee9422e9414187a59c4bfa7b75f, type: 3}
-  - {fileID: 5148034671067266741, guid: d8e2a316d25af8f47b5d679df08e16f3, type: 3}
   bubbleDelay: 0.25
   projectile: 1
-  bubbleSpeed: 0.5
+  bubbleSpeed: 3
   maxContainingDuration: 50

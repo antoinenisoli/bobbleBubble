@@ -15,7 +15,19 @@ namespace CustomPhysics2D
         [SerializeField] Tilemap tilemap;
         [SerializeField] GameObject blockPrefab;
 
-        public int Score;
+        private int score;
+
+        public int Score 
+        { 
+            get => score; 
+            set
+            {
+                if (value < 0)
+                    value = 0;
+
+                score = value;
+            }
+        }
 
         private void Awake()
         {
@@ -34,6 +46,12 @@ namespace CustomPhysics2D
         {
             EventManager.Instance.onNewBodyCreated.AddListener(AddCollider);
             EventManager.Instance.onBodyRemove.AddListener(RemoveCollider);
+        }
+
+        public void AddScore(int value)
+        {
+            Score += value;
+            EventManager.Instance.onScore.Invoke(Score);
         }
 
         public void AddCollider(CustomBoxCollider collider)

@@ -95,7 +95,7 @@ MonoBehaviour:
   interactWith:
     serializedVersion: 2
     m_Bits: 4294967295
-  wayPoints: []
+  scoreValue: 500
   speed: 0.01
 --- !u!1 &5291008846797084856
 GameObject:

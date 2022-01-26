@@ -50,10 +50,10 @@ public class PlayerController : PhysicalEntity
 
     void Jump()
     {
+        SoundManager.Instance.PlayAudio("Bubble Bobble SFX (9)");
         body.inAir = true;
         hasJumped = true;
         print("jump");
-        EventManager.Instance.onPlayerJump.Invoke();
         body.velocity = new Vector2(body.velocity.x, 0);
         body.AddForce(Vector2.up * jumpForce);
     }
@@ -78,7 +78,6 @@ public class PlayerController : PhysicalEntity
         }
         else if (col.normal.y > 0)
         {
-            EventManager.Instance.onPlayerLanding.Invoke();
             hasJumped = false;
         }
     }
@@ -112,6 +111,7 @@ public class PlayerController : PhysicalEntity
         GameObject newBubble = Instantiate(bubblePrefab, transform.position, Quaternion.identity);
         Bubble bubble = newBubble.GetComponent<Bubble>();
         bubble.Shoot(Vector2.right * xDirection, shootForce);
+        SoundManager.Instance.PlayAudio("Bubble Bobble SFX (4)");
     }
 
     void ManageShooting()

@@ -8,16 +8,13 @@ namespace CustomPhysics2D
     {
         [SerializeField] Vector2 direction;
         [SerializeField] float currentSpeed;
-        [SerializeField] GameObject[] deathFX;
 
         [Header("Transforms into bubble")]
         [SerializeField] float bubbleDelay = 0.15f;
         public bool projectile = true;
         [SerializeField] float bubbleSpeed = 1f;
-
-        [SerializeField] float maxContainingDuration = 30f;
-        float containingTimer;
         Enemy containedEnemy;
+
         public bool contains => containedEnemy != null;
 
         public override void Awake()
@@ -37,10 +34,10 @@ namespace CustomPhysics2D
             if (!CustomPhysics.CompareLayer(interactWith, col.collider.gameObject.layer))
                 return;
 
-            //print(col.collider);
             Enemy enemy = col.collider.GetComponent<Enemy>();
-            if (enemy)
+            if (enemy && projectile)
             {
+                SoundManager.Instance.PlayAudio("Bubble Bobble SFX (2)");
                 containedEnemy = enemy;
                 enemy.gameObject.SetActive(false);
                 StopAllCoroutines();
@@ -65,11 +62,15 @@ namespace CustomPhysics2D
         {
             if (contains)
             {
+                SoundManager.Instance.PlayAudio("Bubble Bobble SFX (17)");
+                GameplayManager.instance.AddScore(containedEnemy.scoreValue);
+                VFXManager.Instance.PlayVFX("EnemyDeath", transform.position);
+                GameObject fx = VFXManager.Instance.PlayVFX("ScoreText", transform.position);
+                FloatingText text = fx.GetComponent<FloatingText>();
+                if (text)
+                    text.Create(containedEnemy.scoreValue);
+
                 Destroy(containedEnemy.gameObject);
-                for (int i = 0; i < deathFX.Length; i++)
-                {
-                    GameObject fx = Instantiate(deathFX[i], transform.position, Quaternion.identity);
-                }
             }
         }
 
@@ -86,22 +87,6 @@ namespace CustomPhysics2D
             currentSpeed = force;
             direction = dir;
             body.velocity = direction * force;
-        }
-
-        public override void Update()
-        {
-            base.Update();
-
-            if (!projectile)
-            {
-                containingTimer += Time.deltaTime;
-                if (containingTimer > maxContainingDuration)
-                {
-                    containedEnemy.gameObject.SetActive(true);
-                    containedEnemy.gameObject.transform.position = transform.position;
-                    Destroy(gameObject);
-                }
-            }
         }
     }
 }

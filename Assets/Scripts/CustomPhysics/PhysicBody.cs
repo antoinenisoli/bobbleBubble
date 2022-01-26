@@ -216,7 +216,6 @@ namespace CustomPhysics2D
         {
             RemoveWrongColliders();
             contacts = contactCollisions.Values.ToList();
-            impulseVelocity.y = Mathf.Lerp(impulseVelocity.y, 0, drag * Time.fixedDeltaTime);
 
             if (lastPos != (Vector2)transform.position)
             {
@@ -233,6 +232,9 @@ namespace CustomPhysics2D
             customCollider.box.position = futurePos;
             ManageCollisions();
             inAir = !CheckGround();
+            impulseVelocity.y = Mathf.Lerp(impulseVelocity.y, 0, drag * Time.fixedDeltaTime);
+            impulseVelocity.y *= Time.fixedDeltaTime;
+
             transform.Translate(ComputeVelocity);
         }
     }
